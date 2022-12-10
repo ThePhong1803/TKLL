@@ -72,10 +72,10 @@ void main(void)
         LcdClearS();
         SetupForFirstProgram();
         delay_ms(1000);
-        LcdPrintString(0,6,"ALARM CLOCK");    
+        LcdPrintString(0,6,"DIGITAL CLOCK");
         delay_ms(2000);
 	while (1)
-	{
+	{   
             //bypass timer 3, run as fast as possible
                 while(!flag_timer3); //trap mcu in nop loop and wait for timer 3 to expired
                 flag_timer3 = 0;
@@ -86,6 +86,10 @@ void main(void)
     //            SetUpAlarm();
                 menuControl();
                 DisplayLcdScreen();
+//                if(setTimeFlag){
+//                    SetUpTime();
+//                    setTimeFlag = 0;
+//                }
 	}
 }
 // Hien thuc cac module co ban cua chuong trinh
@@ -328,7 +332,7 @@ void DisplayAlarmTime()
             LcdPrintStringS(1,10,"ON ");
             break;
     }
-    LcdPrintStringS(1,13,"    ");
+    LcdPrintStringS(1,13,"   ");
     
 }
 

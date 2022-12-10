@@ -1,11 +1,17 @@
-build/default/production/main.o:  \
-	C:/Users/PC/Desktop/Digital\ Clock/main.c  \
-	C:/Users/PC/Desktop/Digital\ Clock/timer/timer.h  \
-	C:/Users/PC/Desktop/Digital\ Clock/button_matrix/button.h  \
-	C:/Users/PC/Desktop/Digital\ Clock/lcd/lcd.h  \
-	C:/Users/PC/Desktop/Digital\ Clock/i2c/i2c.h  \
-	C:/Users/PC/Desktop/Digital\ Clock/uart/uart.h  \
-	C:/Users/PC/Desktop/Digital\ Clock/main.h  \
-	C:/Users/PC/Desktop/Digital\ Clock/interrupt/interrupt.h  \
-	C:/Users/PC/Desktop/Digital\ Clock/menu/menu.h  \
+build/default/production/main.o : \
+	D:/Subjects/DA\ TKLL\ document/Project/TKLL/main.c \
+	D:/Subjects/DA\ TKLL\ document/Project/TKLL/timer/timer.h \
+	D:/Subjects/DA\ TKLL\ document/Project/TKLL/button_matrix/button.h \
+	D:/Subjects/DA\ TKLL\ document/Project/TKLL/lcd/lcd.h \
+	D:/Subjects/DA\ TKLL\ document/Project/TKLL/i2c/i2c.h \
+	D:/Subjects/DA\ TKLL\ document/Project/TKLL/uart/uart.h \
+	C:/Program\ Files\ (x86)/Microchip/mplabc18/v3.47/h/stdio.h \
+	C:/Program\ Files\ (x86)/Microchip/mplabc18/v3.47/h/string.h \
+	D:/Subjects/DA\ TKLL\ document/Project/TKLL/main.h \
+	C:/Program\ Files\ (x86)/Microchip/mplabc18/v3.47/h/p18f4620.h \
+	D:/Subjects/DA\ TKLL\ document/Project/TKLL/interrupt/interrupt.h \
+	D:/Subjects/DA\ TKLL\ document/Project/TKLL/menu/menu.h \
+	D:/Subjects/DA\ TKLL\ document/Project/TKLL/day_modify/day_modify.h \
+	C:/Program\ Files\ (x86)/Microchip/mplabc18/v3.47/h/stdarg.h \
+	C:/Program\ Files\ (x86)/Microchip/mplabc18/v3.47/h/stddef.h \
 

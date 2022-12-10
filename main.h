@@ -9,6 +9,7 @@
 #include "i2c\i2c.h"
 #include "uart\uart.h"
 #include "menu\menu.h"
+#include "day_modify\day_modify.h"
 
 #pragma config OSC		= HS
 #pragma config FCMEN            = OFF
