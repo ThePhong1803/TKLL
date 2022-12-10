@@ -16,19 +16,21 @@
 #define STOPWATCH           3
 #define RUN_STOPWATCH       30
 #define TIMER_CLOCK         4
+#define RUN_TIMER_CLOCK     40
 #define TIME_MODIFY         5
 #define RUN_TIME_MODIFY     6
 #define WORLD_TIME          7
-#define UART_CONSOLE        8
+#define RUN_WORLD_TIME      8
+#define UART_CONSOLE        9
 #define BACK                256
 #define NULL                0
 
 #define KEYUP           isKeyPressed(4)
 #define KEYDOWN         isKeyPressed(5)
 #define KEYOK           isKeyPressed(6)
-#define KEYOK_HOLD      isKeyHold(6)
-#define KEYUP_HOLD      isKeyHold(4)
-#define KEYDOWN_HOLD    isKeyHold(5)
+#define KEYOK_HOLD      isKeyHold(4)
+#define KEYUP_HOLD      isKeyHold(5)
+#define KEYDOWN_HOLD    isKeyHold(6)
 
 void recvUartData();
 void menuControl();
@@ -36,6 +38,7 @@ void uart_console();
 
 extern unsigned char setTimeFlag;
 extern unsigned char returnFlag;
+extern unsigned char returnOK;
 
 #endif	/* MENU_H */
 

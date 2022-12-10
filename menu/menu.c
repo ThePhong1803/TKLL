@@ -49,11 +49,12 @@ int last_state = NULL;
 #define PARIS      52
 #define NEWYORK    53
 #define LONDON     54
-#define VIETNAM    55
+#define HANOI    55
 #define WAIT       56
 
 int modify = 0;
 int last_modify = 0;
+unsigned char timer_clock_config = 0;
 
 int status_worldTime = TOKYO;
 int last_statusWT = TOKYO;
@@ -62,11 +63,15 @@ int zone = 7;
 int hour_change;
 int uartBuff = -1;
 int uartBuffDate = -1;
+unsigned char returnOK = 0;
+int hour_tc = 0, minute_tc = 0, second_tc = 0, cen_tc = 0;
+unsigned char blink = 0;
+unsigned char run_stop = 0;
 // CONG END
 
 int cmd_state = CMD_INIT;
 int cmd_date = CMD_INIT; //cong
-unsigned char hour_t, minute_t, second_t, temp1, temp2, returnFlag = 0;
+unsigned char hour_t, minute_t, second_t, temp1, temp2, returnFlag = 0, setTimeFlag = 0;
 int year_t, month_t, date_t, day_t;
 unsigned char run_stopwatch_flag = 0, hour_st = 0, minute_st = 0, second_st = 0, centi_second = 0, timer3_tick;
 
@@ -87,6 +92,8 @@ int check_number_uart();
 int validate(int number, int up);
 int check_month(int month);
 unsigned char check_day(unsigned char mode);
+void display_timer_clock();
+void run_timer_clock();
 
 void menuControl() {
     switch (status) {
@@ -190,10 +197,14 @@ void menuControl() {
                 status = STOPWATCH;
             }
             if (KEYOK > DEBOUNCE_THRS) {
-                
+                status = RUN_TIMER_CLOCK;
+                timer_clock_config = 0;
             }
             break;
-
+        case RUN_TIMER_CLOCK:
+            display_timer_clock();
+            run_timer_clock();
+            break;
         case TIME_MODIFY:
             if (last_state == TIMER_CLOCK) {
                 LcdPrintStringS(0, 0, " Timer Clock");
@@ -245,11 +256,11 @@ void menuControl() {
                 status = TIME_MODIFY;
             }
             if (KEYOK > DEBOUNCE_THRS) {
-                status = 1247;
+                status = RUN_WORLD_TIME;
                 check_UTC();
             }
             break;
-        case 1247:
+        case RUN_WORLD_TIME:
             fsm_worldTime();
             break;
         case BACK:
@@ -325,6 +336,149 @@ void display_stopwatch() {
         LcdPrintNumS(1, 12, centi_second);
     } else
         LcdPrintNumS(1, 11, centi_second);
+}
+
+void display_timer_clock() {
+    LcdPrintStringS(0, 0, "TIMER CLOCK BACK");
+    LcdPrintStringS(1, 0, "  ");
+    if (run_stop) {
+        LcdPrintStringS(1, 12, "STOP");
+    } else LcdPrintStringS(1, 12, "RUN");
+    if (hour_tc < 10) {
+        LcdPrintStringS(1, 1, "0");
+        LcdPrintNumS(1, 2, hour_tc);
+    } else
+        LcdPrintNumS(1, 1, hour_tc);
+    LcdPrintStringS(1, 3, ":");
+    if (minute_tc < 10) {
+        LcdPrintStringS(1, 4, "0");
+        LcdPrintNumS(1, 5, minute_tc);
+    } else
+        LcdPrintNumS(1, 4, minute_tc);
+    LcdPrintStringS(1, 6, ":");
+    if (second_tc < 10) {
+        LcdPrintStringS(1, 7, "0");
+        LcdPrintNumS(1, 8, second_tc);
+    } else
+        LcdPrintNumS(1, 7, second_tc);
+}
+
+void run_timer_clock() {
+    switch (timer_clock_config) {
+        case 0:
+            blink = (blink + 1) % 20;
+            if (blink > 15)
+                LcdPrintStringS(1, 1, "  ");
+            if (KEYUP > DEBOUNCE_THRS) {
+                hour_tc += 1;
+                if (hour_tc > 23)
+                    hour_tc = 0;
+            }
+            if (KEYDOWN > DEBOUNCE_THRS) {
+                hour_tc -= 1;
+                UartSendNum(hour_tc);
+                if (hour_tc < 0)
+                    hour_tc = 23;
+            }
+            if (KEYOK > DEBOUNCE_THRS) {
+                timer_clock_config = 1;
+            }
+            break;
+        case 1:
+            blink = (blink + 1) % 20;
+            if (blink > 15)
+                LcdPrintStringS(1, 4, "  ");
+            if (KEYUP > DEBOUNCE_THRS) {
+                minute_tc += 1;
+                if (minute_tc > 59)
+                    minute_tc = 0;
+            }
+            if (KEYDOWN > DEBOUNCE_THRS) {
+                minute_tc -= 1;
+                if (minute_tc < 0) {
+                    minute_tc = 59;
+                }
+            }
+            if (KEYOK > DEBOUNCE_THRS) {
+                timer_clock_config = 2;
+            }
+            break;
+        case 2:
+            blink = (blink + 1) % 20;
+            if (blink > 15)
+                LcdPrintStringS(1, 7, "  ");
+            if (KEYUP > DEBOUNCE_THRS) {
+                second_tc += 1;
+                if (second_tc > 59)
+                    second_tc = 0;
+            }
+            if (KEYDOWN > DEBOUNCE_THRS) {
+                second_tc -= 1;
+                if (second_tc < 0) {
+                    second_tc = 59;
+                }
+            }
+            if (KEYOK > DEBOUNCE_THRS) {
+                timer_clock_config = 3;
+            }
+            break;
+        case 3:
+            if (KEYUP > DEBOUNCE_THRS) {
+                run_stop = 1;
+            }
+            if (KEYDOWN > DEBOUNCE_THRS) {
+                run_stop = 0;
+            }
+            if (run_stop) {
+                cen_tc += 5;
+                if (cen_tc >= 300 ) // 1 second elapsed
+                {
+                    cen_tc = 0; // reset centi second;
+                    if(second_tc > 0){
+                        second_tc--; // inc second
+                    }
+                }
+                if (second_tc == 0) //1 minute elapsed
+                {
+                    if(minute_tc != 0){
+                        second_tc = 59;
+                        minute_tc--; // inc minute
+                    }
+                }
+                if (minute_tc == 0) // 1 hour elapsed
+                {
+                     // reset minute
+                    if(hour_tc != 0){
+                        hour_tc--; // inc hour
+                        minute_tc = 59;
+                    }
+                }
+            }
+            if(hour_tc == 0 && minute_tc == 0 && second_tc == 0){
+                run_stop = 0;
+            }
+            if (KEYOK > DEBOUNCE_THRS) {
+                run_stop = 0;
+                timer_clock_config = 4;
+            }
+            break;
+        case 4:
+            blink = (blink + 1) % 20;
+            if (blink > 15)
+                LcdPrintStringS(0, 12, "    ");
+            if (KEYUP || KEYDOWN) {
+                timer_clock_config = 0;
+            } else if (KEYOK > DEBOUNCE_THRS) {
+                status = TIMER_CLOCK;
+                hour_tc = 0;
+                minute_tc = 0;
+                second_tc = 0;
+                timer_clock_config = NULL;
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 unsigned char getUartBufferChar() {
@@ -687,7 +841,17 @@ void fsm_timeModify() {
                 modify = 0;
             }
             if (KEYOK > DEBOUNCE_THRS) {
-                SetUpTime();
+                modify = 3;
+                returnOK = 1;
+            }
+            break;
+        case 3:
+            DisplayTime();
+            SetUpTime();
+            if (setTimeFlag) {
+                modify = 0;
+                setTimeFlag = 0;
+                status = TIME_MODIFY;
             }
             break;
         case BACK:
@@ -783,11 +947,11 @@ void fsm_worldTime() {
                 LcdPrintStringS(1, 0, ">LONDON   UTC+00");
             } else {
                 LcdPrintStringS(0, 0, ">LONDON   UTC+00");
-                LcdPrintStringS(1, 0, " VIETNAM  UTC+07");
+                LcdPrintStringS(1, 0, " HANOI  UTC+07");
             }
             if (KEYDOWN > DEBOUNCE_THRS) {
                 last_statusWT = LONDON;
-                status_worldTime = VIETNAM;
+                status_worldTime = HANOI;
             }
             if (KEYUP > DEBOUNCE_THRS) {
                 last_statusWT = LONDON;
@@ -795,29 +959,29 @@ void fsm_worldTime() {
             }
             change_UTC(0);
             break;
-        case VIETNAM:
+        case HANOI:
             if (last_statusWT == LONDON) {
                 LcdPrintStringS(0, 0, " LONDON   UTC+00");
-                LcdPrintStringS(1, 0, ">VIETNAM  UTC+07");
+                LcdPrintStringS(1, 0, ">HANOI  UTC+07");
             } else {
-                LcdPrintStringS(0, 0, ">VIETNAM  UTC+07");
+                LcdPrintStringS(0, 0, ">HANOI  UTC+07");
                 LcdPrintStringS(1, 0, " BACK");
             }
             if (KEYDOWN > DEBOUNCE_THRS) {
-                last_statusWT = VIETNAM;
+                last_statusWT = HANOI;
                 status_worldTime = BACK;
             }
             if (KEYUP > DEBOUNCE_THRS) {
-                last_statusWT = VIETNAM;
+                last_statusWT = HANOI;
                 status_worldTime = LONDON;
             }
             change_UTC(7);
             break;
         case BACK:
-            LcdPrintStringS(0, 0, " VIETNAM  UTC+07");
+            LcdPrintStringS(0, 0, " HANOI  UTC+07");
             LcdPrintStringS(1, 0, ">BACK");
             if (KEYUP > DEBOUNCE_THRS) {
-                status_worldTime = VIETNAM;
+                status_worldTime = HANOI;
                 last_statusWT = BACK;
             }
             if (KEYDOWN > DEBOUNCE_THRS) {
@@ -872,7 +1036,7 @@ void check_UTC() {
             status_worldTime = LONDON;
             break;
         case 7:
-            status_worldTime = VIETNAM;
+            status_worldTime = HANOI;
             break;
         default:
             break;
