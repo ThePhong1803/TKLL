@@ -40,11 +40,11 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/button_matrix/button.o ${OBJECTDIR}/lcd/lcd.o ${OBJECTDIR}/interrupt/interrupt.o ${OBJECTDIR}/timer/timer.o ${OBJECTDIR}/i2c/i2c.o ${OBJECTDIR}/main.o ${OBJECTDIR}/menu/menu.o ${OBJECTDIR}/uart/uart.o ${OBJECTDIR}/day_modify/day_modify.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/button_matrix/button.o.d ${OBJECTDIR}/lcd/lcd.o.d ${OBJECTDIR}/interrupt/interrupt.o.d ${OBJECTDIR}/timer/timer.o.d ${OBJECTDIR}/i2c/i2c.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/menu/menu.o.d ${OBJECTDIR}/uart/uart.o.d ${OBJECTDIR}/day_modify/day_modify.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/button_matrix/button.o ${OBJECTDIR}/lcd/lcd.o ${OBJECTDIR}/interrupt/interrupt.o ${OBJECTDIR}/timer/timer.o ${OBJECTDIR}/i2c/i2c.o ${OBJECTDIR}/main.o ${OBJECTDIR}/menu/menu.o ${OBJECTDIR}/uart/uart.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/button_matrix/button.o.d ${OBJECTDIR}/lcd/lcd.o.d ${OBJECTDIR}/interrupt/interrupt.o.d ${OBJECTDIR}/timer/timer.o.d ${OBJECTDIR}/i2c/i2c.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/menu/menu.o.d ${OBJECTDIR}/uart/uart.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/button_matrix/button.o ${OBJECTDIR}/lcd/lcd.o ${OBJECTDIR}/interrupt/interrupt.o ${OBJECTDIR}/timer/timer.o ${OBJECTDIR}/i2c/i2c.o ${OBJECTDIR}/main.o ${OBJECTDIR}/menu/menu.o ${OBJECTDIR}/uart/uart.o ${OBJECTDIR}/day_modify/day_modify.o
+OBJECTFILES=${OBJECTDIR}/button_matrix/button.o ${OBJECTDIR}/lcd/lcd.o ${OBJECTDIR}/interrupt/interrupt.o ${OBJECTDIR}/timer/timer.o ${OBJECTDIR}/i2c/i2c.o ${OBJECTDIR}/main.o ${OBJECTDIR}/menu/menu.o ${OBJECTDIR}/uart/uart.o
 
 
 CFLAGS=
@@ -138,12 +138,6 @@ ${OBJECTDIR}/uart/uart.o: uart/uart.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE) -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -p$(MP_PROCESSOR_OPTION) -I"C:/Users/PC/Desktop/Digital Clock"  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/uart/uart.o   uart/uart.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/uart/uart.o 
 	
-${OBJECTDIR}/day_modify/day_modify.o: day_modify/day_modify.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/day_modify 
-	@${RM} ${OBJECTDIR}/day_modify/day_modify.o.d 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -p$(MP_PROCESSOR_OPTION) -I"C:/Users/PC/Desktop/Digital Clock"  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/day_modify/day_modify.o   day_modify/day_modify.c 
-	@${DEP_GEN} -d ${OBJECTDIR}/day_modify/day_modify.o 
-	
 else
 ${OBJECTDIR}/button_matrix/button.o: button_matrix/button.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/button_matrix 
@@ -192,12 +186,6 @@ ${OBJECTDIR}/uart/uart.o: uart/uart.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/uart/uart.o.d 
 	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION) -I"C:/Users/PC/Desktop/Digital Clock"  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/uart/uart.o   uart/uart.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/uart/uart.o 
-	
-${OBJECTDIR}/day_modify/day_modify.o: day_modify/day_modify.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/day_modify 
-	@${RM} ${OBJECTDIR}/day_modify/day_modify.o.d 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION) -I"C:/Users/PC/Desktop/Digital Clock"  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/day_modify/day_modify.o   day_modify/day_modify.c 
-	@${DEP_GEN} -d ${OBJECTDIR}/day_modify/day_modify.o 
 	
 endif
 

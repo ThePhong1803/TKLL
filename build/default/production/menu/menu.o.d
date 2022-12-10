@@ -9,5 +9,4 @@ build/default/production/menu/menu.o : \
 	C:/Program\ Files\ (x86)/Microchip/mplabc18/v3.47/h/p18f4620.h \
 	C:/Program\ Files\ (x86)/Microchip/mplabc18/v3.47/h/stdarg.h \
 	C:/Program\ Files\ (x86)/Microchip/mplabc18/v3.47/h/stddef.h \
-	D:/Subjects/DA\ TKLL\ document/Project/TKLL/day_modify/day_modify.h \
 

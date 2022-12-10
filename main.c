@@ -72,7 +72,7 @@ void main(void)
         LcdClearS();
         SetupForFirstProgram();
         delay_ms(1000);
-        LcdPrintString(0,6,"DIGITAL CLOCK");
+        LcdPrintString(0,6," DIGITAL CLOCK");
         delay_ms(2000);
 	while (1)
 	{   
