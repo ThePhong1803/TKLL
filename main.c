@@ -289,7 +289,11 @@ void DisplayTime() {
         LcdPrintNumS(1, 6, date);
     LcdPrintStringS(1, 8, " ");
     LcdPrintNumS(1, 9, 20);
-    LcdPrintNumS(1, 11, year);
+    if(year < 10){
+        LcdPrintNumS(1, 11, 0);
+        LcdPrintNumS(1, 12, year);
+    }
+    else LcdPrintNumS(1, 11, year);
 
 }
 
@@ -675,7 +679,7 @@ void Alarm() {
                 LcdClearS();
             }
             timeAlarm++;
-            if (timeAlarm > 400) {
+            if (timeAlarm > 400 || KEYUP) {
                 bitEnable = ENABLE;
                 flagAlarm = 0;
                 Write_DS1307(ADDRESS_FLAG_ALARM, flagAlarm);

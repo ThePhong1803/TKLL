@@ -28,9 +28,9 @@
 #define KEYUP           isKeyPressed(4)
 #define KEYDOWN         isKeyPressed(5)
 #define KEYOK           isKeyPressed(6)
-#define KEYOK_HOLD      isKeyHold(4)
-#define KEYUP_HOLD      isKeyHold(5)
-#define KEYDOWN_HOLD    isKeyHold(6)
+#define KEYOK_HOLD      isKeyHold(6)
+#define KEYUP_HOLD      isKeyHold(4)
+#define KEYDOWN_HOLD    isKeyHold(5)
 
 void recvUartData();
 void menuControl();
