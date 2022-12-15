@@ -22,6 +22,9 @@
 #define WORLD_TIME          7
 #define RUN_WORLD_TIME      8
 #define UART_CONSOLE        9
+#define TEMP_HUMI           10
+#define RUN_DHT             11
+#define WEATHER_DISPLAY     12
 #define BACK                256
 #define NULL                0
 

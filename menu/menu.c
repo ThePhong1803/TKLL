@@ -43,6 +43,14 @@ int last_state = NULL;
 #define DATE_1      117
 #define DATE_2      118
 
+#define CMD_DHT1    200
+#define CMD_DHT2    201
+#define CMD_DHT3    202
+#define TEMP1       203
+#define TEMP2       204
+#define HUMI1       205
+#define HUMI2       206
+#define COLON       207
 
 #define TOKYO      50
 #define BEIJING    51
@@ -68,6 +76,11 @@ int hour_tc = 0, minute_tc = 0, second_tc = 0;
 unsigned char blink = 0;
 unsigned char run_stop = 0;
 int last_sec = 0, curr_sec = 0;
+
+unsigned char dht_state = CMD_INIT;
+unsigned char temperature = 0;
+unsigned char humidity = 0;
+unsigned char dhtBuffer = 0;
 // CONG END
 
 int cmd_state = CMD_INIT;
@@ -252,11 +265,11 @@ void menuControl() {
                 LcdPrintStringS(1, 0, ">World Time");
             } else {
                 LcdPrintStringS(0, 0, ">World Time");
-                LcdPrintStringS(1, 0, " Back");
+                LcdPrintStringS(1, 0, " Weather");
             }
             if (KEYDOWN > DEBOUNCE_THRS) {
                 last_state = status;
-                status = BACK;
+                status = TEMP_HUMI;
             }
             if (KEYUP > DEBOUNCE_THRS) {
                 last_state = status;
@@ -270,12 +283,41 @@ void menuControl() {
         case RUN_WORLD_TIME:
             fsm_worldTime();
             break;
-        case BACK:
-            LcdPrintStringS(0, 0, " World Time");
-            LcdPrintStringS(1, 0, ">Back");
+        case TEMP_HUMI:
+            if (last_state == WORLD_TIME) {
+                LcdPrintStringS(0, 0, " World Time");
+                LcdPrintStringS(1, 0, ">Weather");
+            } else {
+                LcdPrintStringS(0, 0, ">Weather");
+                LcdPrintStringS(1, 0, " Back");
+            }
+            if (KEYDOWN > DEBOUNCE_THRS) {
+                last_state = status;
+                status = BACK;
+            }
             if (KEYUP > DEBOUNCE_THRS) {
                 last_state = status;
                 status = WORLD_TIME;
+            }
+            if (KEYOK > DEBOUNCE_THRS) {
+                status = RUN_DHT;
+            }
+            break;
+        case RUN_DHT:
+            LcdPrintStringS(0, 0, "Receiving data...");
+            uart_console();
+            break;
+        case WEATHER_DISPLAY:
+            LcdPrintStringS(0, 0, "OK");
+            if (KEYOK > DEBOUNCE_THRS) {
+                status = TEMP_HUMI;
+            }
+        case BACK:
+            LcdPrintStringS(0, 0, " Weather");
+            LcdPrintStringS(1, 0, ">Back");
+            if (KEYUP > DEBOUNCE_THRS) {
+                last_state = status;
+                status = TEMP_HUMI;
             }
             if (KEYDOWN > DEBOUNCE_THRS) {
                 last_state = status;
@@ -830,6 +872,91 @@ void run_timer_clock() {
             default:
                 break;
 
+        }
+        //for dht cmd
+        switch(dht_state){
+            case CMD_INIT:
+                if (c == '!') dht_state = CMD_START;
+                break;
+
+            case CMD_START:
+                if (c == 'D') dht_state = CMD_DHT1;
+                else if (c == '!') dht_state = CMD_START;
+                else dht_state = CMD_INIT;
+                break;
+
+            case CMD_DHT1:
+                if (c == 'H') dht_state = CMD_DATE2;
+                else if (c == '!') dht_state = CMD_START;
+                else dht_state = CMD_INIT;
+                break;
+
+            case CMD_DHT2:
+                if (c == 'T') dht_state = CMD_DATE3;
+                else if (c == '!') dht_state = CMD_START;
+                else dht_state = CMD_INIT;
+                break;
+
+            case CMD_DHT3:
+                if (c == ':') dht_state = TEMP1;
+                else if (c == '!') dht_state = CMD_START;
+                else dht_state = CMD_INIT;
+                break;
+            case TEMP1:
+                dhtBuffer = check_number_uart(c);
+                if(dhtBuffer != -1){
+                    temperature = dhtBuffer * 10;
+                    dht_state = TEMP2;
+                }
+                else {
+                    dht_state = CMD_INIT;
+                    UartSendString("Read error !\r\n");
+                }
+                break;
+            case TEMP2:
+                dhtBuffer = check_number_uart(c);
+                if(dhtBuffer != -1){
+                    temperature = dhtBuffer * 10;
+                    dht_state = HUMI1;
+                }
+                else {
+                    dht_state = CMD_INIT;
+                    UartSendString("Read error !\r\n");
+                }
+                break;
+            case HUMI1:
+                dhtBuffer = check_number_uart(c);
+                if(dhtBuffer != -1){
+                    humidity = dhtBuffer * 10;
+                    dht_state = HUMI2;
+                }
+                else {
+                    dht_state = CMD_INIT;
+                    UartSendString("Read error !\r\n");
+                }
+                break;
+            case HUMI2:
+                dhtBuffer = check_number_uart(c);
+                if(dhtBuffer != -1){
+                    humidity += dhtBuffer;
+                    dht_state = SUCCESS;
+                }
+                else {
+                    dht_state = CMD_INIT;
+                    UartSendString("Read error !\r\n");
+                }
+                break;
+            case SUCCESS:
+                if(c == '#'){
+                    status = WEATHER_DISPLAY;
+                }
+                else {
+                    UartSendString("Confirm Error!\r\n");
+                    dht_state = CMD_INIT;
+                }
+                break;
+            default:
+                break;
         }
     }
 
