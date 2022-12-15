@@ -311,6 +311,7 @@ void menuControl() {
             }
             break;
         case RUN_DHT:
+            LcdPrintStringS(0, 0, "Receving data..");
             count = 0;
             curr_sec = Read_DS1307(ADDRESS_SECOND);
             last_sec = curr_sec;
