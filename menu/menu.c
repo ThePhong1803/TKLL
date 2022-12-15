@@ -995,9 +995,9 @@ void run_timer_clock() {
             case HANOI:
                 if (last_statusWT == LONDON) {
                     LcdPrintStringS(0, 0, " LONDON   UTC+00");
-                    LcdPrintStringS(1, 0, ">HANOI  UTC+07");
+                    LcdPrintStringS(1, 0, ">HANOI    UTC+07");
                 } else {
-                    LcdPrintStringS(0, 0, ">HANOI  UTC+07");
+                    LcdPrintStringS(0, 0, ">HANOI    UTC+07");
                     LcdPrintStringS(1, 0, " BACK");
                 }
                 if (KEYDOWN > DEBOUNCE_THRS) {
@@ -1011,7 +1011,7 @@ void run_timer_clock() {
                 change_UTC(7);
                 break;
             case BACK:
-                LcdPrintStringS(0, 0, " HANOI  UTC+07");
+                LcdPrintStringS(0, 0, " HANOI    UTC+07");
                 LcdPrintStringS(1, 0, ">BACK");
                 if (KEYUP > DEBOUNCE_THRS) {
                     status_worldTime = HANOI;
