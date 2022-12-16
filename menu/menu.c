@@ -85,6 +85,9 @@ unsigned char dhtBuffer = 0;
 unsigned char uart_mode = 0;
 unsigned char uart_last_mode = 0;
 unsigned char count = 0;
+unsigned char flagDHT = 0;
+unsigned char flagInternet = 0;
+unsigned char flagUart = 0;
 // CONG END
 
 int cmd_state = CMD_INIT;
@@ -262,6 +265,10 @@ void menuControl() {
             if (KEYOK > DEBOUNCE_THRS) {
                 status = TIME_SCREEN;
             }
+            if(flagInternet && uart_mode == 1){
+                status = TIME_SCREEN;
+                flagInternet = 0;
+            }
             break;
 
         case WORLD_TIME:
@@ -306,7 +313,7 @@ void menuControl() {
             }
             if (KEYOK > DEBOUNCE_THRS) {
                 status = RUN_DHT;
-                UartSendString("!DHT#");
+                UartSendString("!DHT#\r\n");
                 dht_state = CMD_INIT;
             }
             break;
@@ -330,9 +337,10 @@ void menuControl() {
                 last_sec = curr_sec;
                 count++;
             }
-            if(count == 2){
-                UartSendString("!DHT#");
+            if(count == 5 && flagDHT == 1){
+                UartSendString("!DHT#\r\n");
                 count = 0;
+                flagDHT = 0;
             }
             uart_console();
             if (KEYOK > DEBOUNCE_THRS) {
@@ -706,7 +714,9 @@ void command_parse() {
                 Write_DS1307(ADDRESS_HOUR, hour_t);
                 Write_DS1307(ADDRESS_MINUTE, minute_t);
                 write_ds1307(ADDRESS_SECOND, second_t);
-                UartSendString("\r\nConfiguration Time Success!\r\n");
+                if(flagUart){
+                    UartSendString("\r\nConfiguration Time Success!\r\n");
+                }
             } else {
                 UartSendString("\r\nNeed confirm time !\r\n");
                 UartSendString("\r\nCharacter confirm is '#'\r\n");
@@ -873,7 +883,10 @@ void command_parse() {
                 Write_DS1307(ADDRESS_MONTH, month_t);
                 Write_DS1307(ADDRESS_DATE, date_t);
                 Write_DS1307(ADDRESS_DAY, day_t);
-                UartSendString("\r\nConfiguration Date Success!\r\n");
+                if(flagUart){
+                    UartSendString("\r\nConfiguration Date Success!\r\n");
+                }
+                flagInternet = 1;
             } else {
                 UartSendString("\r\nNeed confirm date change !\r\n");
                 UartSendString("\r\nCharacter confirm is '#'\r\n");
@@ -957,6 +970,7 @@ void command_parse() {
         case SUCCESS:
             if (c == '#') {
                 status = WEATHER_DISPLAY;
+                flagDHT = 1;
                 dht_state = CMD_INIT;
             } else {
                 UartSendString("Confirm Error!\r\n");
@@ -1052,6 +1066,7 @@ void fsm_uart_mode() {
                 writeIdx = 0;
                 readIdx = 0;
                 recvDataFlag = 0;
+                flagUart = 1;
                 status = UART_CONSOLE;
             }
             if (KEYUP > DEBOUNCE_THRS) {
@@ -1072,11 +1087,14 @@ void fsm_uart_mode() {
                 LcdPrintStringS(1, 0, " Back");
             }
             if (KEYOK > DEBOUNCE_THRS) {
-                UartSendString("!TIME#");
+                UartSendString("!TIME#\r\n");
+                flagUart = 0;
                 writeIdx = 0;
                 readIdx = 0;
                 recvDataFlag = 0;
                 status = UART_CONSOLE;
+                zone = 7;
+                flagInternet = 0;
             }
             if (KEYUP > DEBOUNCE_THRS) {
                 uart_mode = 0;
