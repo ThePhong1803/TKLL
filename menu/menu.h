@@ -16,9 +16,15 @@
 #define STOPWATCH           3
 #define RUN_STOPWATCH       30
 #define TIMER_CLOCK         4
+#define RUN_TIMER_CLOCK     40
 #define TIME_MODIFY         5
-#define LANGUAGE            6
-#define UART_CONSOLE        7
+#define RUN_TIME_MODIFY     6
+#define WORLD_TIME          7
+#define RUN_WORLD_TIME      8
+#define UART_CONSOLE        9
+#define TEMP_HUMI           10
+#define RUN_DHT             11
+#define WEATHER_DISPLAY     12
 #define BACK                256
 #define NULL                0
 
@@ -33,7 +39,9 @@ void recvUartData();
 void menuControl();
 void uart_console();
 
+extern unsigned char setTimeFlag;
 extern unsigned char returnFlag;
+extern unsigned char returnOK;
 
 #endif	/* MENU_H */
 

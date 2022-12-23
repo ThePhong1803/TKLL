@@ -1,7 +1,8 @@
-build/default/production/i2c/i2c.o:  \
-	C:/Users/PC/Desktop/Digital\ Clock/i2c/i2c.c  \
-	C:/Users/PC/Desktop/Digital\ Clock/i2c/i2c.h  \
-	C:/Users/PC/Desktop/Digital\ Clock/lcd/lcd.h  \
-	C:/Users/PC/Desktop/Digital\ Clock/timer/timer.h  \
-	C:/Users/PC/Desktop/Digital\ Clock/interrupt/interrupt.h  \
+build/default/production/i2c/i2c.o : \
+	D:/Subjects/DA\ TKLL\ document/Project/TKLL/i2c/i2c.c \
+	D:/Subjects/DA\ TKLL\ document/Project/TKLL/i2c/i2c.h \
+	D:/Subjects/DA\ TKLL\ document/Project/TKLL/lcd/lcd.h \
+	D:/Subjects/DA\ TKLL\ document/Project/TKLL/timer/timer.h \
+	C:/Program\ Files\ (x86)/Microchip/mplabc18/v3.47/h/p18f4620.h \
+	D:/Subjects/DA\ TKLL\ document/Project/TKLL/interrupt/interrupt.h \
 
