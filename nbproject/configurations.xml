@@ -43,6 +43,8 @@
     <Elem>i2c</Elem>
     <Elem>uart</Elem>
     <Elem>menu</Elem>
+    <Elem>day_modify</Elem>
+    <Elem>time_modify</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
