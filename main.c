@@ -345,6 +345,16 @@ void SetUpTime() {
                     hour = 23;
                 Write_DS1307(ADDRESS_HOUR, hour);
             }
+            if (KEYUP_HOLD) {
+                hour = (hour + 3) % 24;
+                Write_DS1307(ADDRESS_HOUR, hour);
+            }
+            if (KEYDOWN_HOLD) {
+                hour = (hour - 3);
+                if (hour > 23)
+                    hour = 23;
+                Write_DS1307(ADDRESS_HOUR, hour);
+            }
             if (KEYOK)
                 statusSetUpTime = SET_MINUTE;
             if (KEYOK_HOLD) {
@@ -364,6 +374,16 @@ void SetUpTime() {
             }
             if (KEYDOWN) {
                 minute = (minute - 1);
+                if (minute > 59)
+                    minute = 59;
+                Write_DS1307(ADDRESS_MINUTE, minute);
+            }
+            if (KEYUP_HOLD) {
+                minute = (minute + 9) % 60;
+                Write_DS1307(ADDRESS_MINUTE, minute);
+            }
+            if (KEYDOWN_HOLD) {
+                minute = (minute - 9);
                 if (minute > 59)
                     minute = 59;
                 Write_DS1307(ADDRESS_MINUTE, minute);
@@ -521,8 +541,18 @@ void SetUpAlarm() {
                 hourAlarm = (hourAlarm + 1) % 24;
                 Write_DS1307(ADDRESS_HOUR_ALARM, hourAlarm);
             }
+            if (KEYUP_HOLD) {
+                hourAlarm = (hourAlarm + 3) % 24;
+                Write_DS1307(ADDRESS_HOUR_ALARM, hourAlarm);
+            }
             if (KEYDOWN) {
                 hourAlarm = (hourAlarm - 1);
+                if (hourAlarm > 23)
+                    hourAlarm = 23;
+                Write_DS1307(ADDRESS_HOUR_ALARM, hourAlarm);
+            }
+            if (KEYDOWN_HOLD) {
+                hourAlarm = (hourAlarm - 3);
                 if (hourAlarm > 23)
                     hourAlarm = 23;
                 Write_DS1307(ADDRESS_HOUR_ALARM, hourAlarm);
@@ -545,8 +575,18 @@ void SetUpAlarm() {
                 minuteAlarm = (minuteAlarm + 1) % 60;
                 Write_DS1307(ADDRESS_MINUTE_ALARM, minuteAlarm);
             }
+            if (KEYUP_HOLD) {
+                minuteAlarm = (minuteAlarm + 9) % 60;
+                Write_DS1307(ADDRESS_MINUTE_ALARM, minuteAlarm);
+            }
             if (KEYDOWN) {
                 minuteAlarm = (minuteAlarm - 1);
+                if (minuteAlarm > 59)
+                    minuteAlarm = 59;
+                Write_DS1307(ADDRESS_MINUTE_ALARM, minuteAlarm);
+            }
+            if (KEYDOWN_HOLD) {
+                minuteAlarm = (minuteAlarm - 9);
                 if (minuteAlarm > 59)
                     minuteAlarm = 59;
                 Write_DS1307(ADDRESS_MINUTE_ALARM, minuteAlarm);
