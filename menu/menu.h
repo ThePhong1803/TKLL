@@ -12,19 +12,22 @@
 
 #define TIME_SCREEN         1
 #define ALARM_CLOCK         2
-#define SET_ALARM           20
-#define STOPWATCH           3
-#define RUN_STOPWATCH       30
-#define TIMER_CLOCK         4
-#define RUN_TIMER_CLOCK     40
-#define TIME_MODIFY         5
-#define RUN_TIME_MODIFY     6
-#define WORLD_TIME          7
-#define RUN_WORLD_TIME      8
-#define UART_CONSOLE        9
-#define TEMP_HUMI           10
-#define RUN_DHT             11
-#define WEATHER_DISPLAY     12
+#define SET_ALARM           3
+#define STOPWATCH           4
+#define RUN_STOPWATCH       5
+#define TIMER_CLOCK         6
+#define RUN_TIMER_CLOCK     7
+#define TIME_MODIFY         8
+#define RUN_TIME_MODIFY     9
+#define WORLD_TIME          10
+#define RUN_WORLD_TIME      11
+#define UART_CONSOLE        12
+#define TEMP_HUMI           13
+#define RUN_DHT             14
+#define WEATHER_DISPLAY     15
+#define LUNAR_CALENDAR      16
+#define DISPLAY_LUNAR       17
+#define DISPLAY_STOP_TIME   18
 #define BACK                256
 #define NULL                0
 
@@ -42,6 +45,5 @@ void uart_console();
 extern unsigned char setTimeFlag;
 extern unsigned char returnFlag;
 extern unsigned char returnOK;
-
 #endif	/* MENU_H */
 

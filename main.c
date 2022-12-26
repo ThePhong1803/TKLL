@@ -34,11 +34,10 @@ unsigned char second = 0, minute = 0, hour = 0;
 unsigned char day = 0;
 unsigned char date = 0, month = 0, year = 0;
 unsigned char statusSetUpAlarm = INIT_SYSTEM;
-unsigned char statusSetUpTime = INIT_SYSTEM;
 unsigned char statusAlarm = INIT_SYSTEM;
 unsigned char hourAlarm = 0, minuteAlarm = 0, bitAlarm = 0;
-unsigned char timeBlink = 0;
 unsigned int timeAlarm = 0;
+unsigned char timeBlink = 0;
 unsigned char flagAlarm = 0;
 unsigned char bitEnable = ENABLE;
 // Khai bao cac ham co ban IO
@@ -50,6 +49,7 @@ void SetupForFirstProgram(void);
 void ReadDataFromDS1307(void);
 void BaiTap_I2C();
 void DisplayTime();
+void DisplayTimeForModify();
 void SetUpAlarm();
 void SetUpTime();
 unsigned char isButtonMode();
@@ -238,8 +238,11 @@ void DisplayTime() {
             break;
     }
 
-    if (returnOK) {
+    if (returnOK == 1) {
         LcdPrintStringS(0, 13, "OK ");
+    }
+    else if (returnOK == 2){
+        LcdPrintStringS(0, 12, "EXIT");
     }
 
     switch (month) {
@@ -324,206 +327,7 @@ void DisplayAlarmTime() {
 
 }
 
-void SetUpTime() {
-    switch (statusSetUpTime) {
-        case INIT_SYSTEM:
-            if (KEYOK && (bitEnable == ENABLE))
-                statusSetUpTime = SET_HOUR;
-            break;
-        case SET_HOUR:
-            bitEnable = DISABLE;
-            timeBlink = (timeBlink + 1) % 20;
-            if (timeBlink > 15)
-                LcdPrintStringS(0, 4, "  ");
-            if (KEYUP) {
-                hour = (hour + 1) % 24;
-                Write_DS1307(ADDRESS_HOUR, hour);
-            }
-            if (KEYDOWN) {
-                hour = (hour - 1);
-                if (hour > 23)
-                    hour = 23;
-                Write_DS1307(ADDRESS_HOUR, hour);
-            }
-            if (KEYUP_HOLD) {
-                hour = (hour + 3) % 24;
-                Write_DS1307(ADDRESS_HOUR, hour);
-            }
-            if (KEYDOWN_HOLD) {
-                hour = (hour - 3);
-                if (hour > 23)
-                    hour = 23;
-                Write_DS1307(ADDRESS_HOUR, hour);
-            }
-            if (KEYOK)
-                statusSetUpTime = SET_MINUTE;
-            if (KEYOK_HOLD) {
-                LcdClearS();
-                bitEnable = ENABLE;
-                statusSetUpTime = INIT_SYSTEM;
-            }
-            break;
-        case SET_MINUTE:
-            bitEnable = DISABLE;
-            timeBlink = (timeBlink + 1) % 20;
-            if (timeBlink > 15)
-                LcdPrintStringS(0, 7, "  ");
-            if (KEYUP) {
-                minute = (minute + 1) % 60;
-                Write_DS1307(ADDRESS_MINUTE, minute);
-            }
-            if (KEYDOWN) {
-                minute = (minute - 1);
-                if (minute > 59)
-                    minute = 59;
-                Write_DS1307(ADDRESS_MINUTE, minute);
-            }
-            if (KEYUP_HOLD) {
-                minute = (minute + 9) % 60;
-                Write_DS1307(ADDRESS_MINUTE, minute);
-            }
-            if (KEYDOWN_HOLD) {
-                minute = (minute - 9);
-                if (minute > 59)
-                    minute = 59;
-                Write_DS1307(ADDRESS_MINUTE, minute);
-            }
-            if (KEYOK)
-                statusSetUpTime = SET_DAY;
-            if (KEYOK_HOLD) {
-                LcdClearS();
-                bitEnable = ENABLE;
-                statusSetUpTime = INIT_SYSTEM;
-            }
-            break;
-        case SET_DAY:
-            bitEnable = DISABLE;
-            timeBlink = (timeBlink + 1) % 20;
-            if (timeBlink > 15)
-                LcdPrintStringS(0, 0, "   ");
-            if (KEYUP) {
-                day = day + 1;
-                if (day > 7)
-                    day = 1;
-                Write_DS1307(ADDRESS_DAY, day);
-            }
-            if (KEYDOWN) {
-                day = day - 1;
-                if (day > 7)
-                    day = 7;
-                Write_DS1307(ADDRESS_DAY, day);
-            }
-            if (KEYOK)
-                statusSetUpTime = SET_DATE;
-            if (KEYOK_HOLD) {
-                LcdClearS();
-                bitEnable = ENABLE;
-                statusSetUpTime = INIT_SYSTEM;
-            }
-            break;
-        case SET_DATE:
-            bitEnable = DISABLE;
-            timeBlink = (timeBlink + 1) % 20;
-            if (timeBlink > 15)
-                LcdPrintStringS(1, 6, "  ");
-            if (KEYUP) {
-                date = date + 1;
-                if (date > 31)
-                    date = 1;
-                Write_DS1307(ADDRESS_DATE, date);
-            }
-            if (KEYDOWN) {
-                date = date - 1;
-                if (date < 1)
-                    date = 31;
-                Write_DS1307(ADDRESS_DATE, date);
-            }
-            if (KEYOK)
-                statusSetUpTime = SET_MONTH;
-            if (KEYOK_HOLD) {
-                LcdClearS();
-                bitEnable = ENABLE;
-                statusSetUpTime = INIT_SYSTEM;
-            }
-            break;
-        case SET_MONTH:
-            bitEnable = DISABLE;
-            timeBlink = (timeBlink + 1) % 20;
-            if (timeBlink > 15)
-                LcdPrintStringS(1, 2, "   ");
-            if (KEYUP) {
-                month = month + 1;
-                if (month > 12)
-                    month = 1;
-                Write_DS1307(ADDRESS_MONTH, month);
-            }
-            if (KEYDOWN) {
-                month = month - 1;
-                if (month < 1)
-                    month = 12;
-                Write_DS1307(ADDRESS_MONTH, month);
-            }
-            if (KEYOK)
-                statusSetUpTime = SET_YEAR;
-            if (KEYOK_HOLD) {
-                LcdClearS();
-                bitEnable = ENABLE;
-                statusSetUpTime = INIT_SYSTEM;
-            }
-            break;
-        case SET_YEAR:
-            bitEnable = DISABLE;
-            timeBlink = (timeBlink + 1) % 20;
-            if (timeBlink > 15)
-                LcdPrintStringS(1, 9, "    ");
-            if (KEYUP) {
-                year = year + 1;
-                if (year > 99)
-                    year = 0;
-                Write_DS1307(ADDRESS_YEAR, year);
-            }
-            if (KEYDOWN) {
-                year = year - 1;
-                if (year < 99)
-                    year = 99;
-                Write_DS1307(ADDRESS_YEAR, year);
-            }
-            if (KEYOK) {
-                LcdClearS();
-                bitEnable = ENABLE;
-                statusSetUpTime = BACK_MENU;
-            }
-            if (KEYOK_HOLD) {
-                LcdClearS();
-                bitEnable = ENABLE;
-                statusSetUpTime = INIT_SYSTEM;
-            }
-            break;
-        case BACK_MENU:
-            bitEnable = DISABLE;
-            DisplayTime();
-            timeBlink = (timeBlink + 1) % 20;
-            if (timeBlink > 15)
-                LcdPrintStringS(0, 12, "    ");
-            if (KEYOK) {
-                //if key ok is pressed, set the return flags;
-                LcdClearS();
-                statusSetUpTime = INIT_SYSTEM;
-                bitEnable = ENABLE;
-                setTimeFlag = 1;
-                returnOK = 0;
-            }
-            if (KEYUP || KEYDOWN) {
-                //if key up or down is press, back to set up time
-                LcdClearS();
-                statusSetUpTime = INIT_SYSTEM;
-                bitEnable = ENABLE;
-            }
-        default:
-            break;
 
-    }
-}
 
 void SetUpAlarm() {
     switch (statusSetUpAlarm) {
@@ -542,7 +346,7 @@ void SetUpAlarm() {
                 Write_DS1307(ADDRESS_HOUR_ALARM, hourAlarm);
             }
             if (KEYUP_HOLD) {
-                hourAlarm = (hourAlarm + 3) % 24;
+                hourAlarm = (hourAlarm + 5) % 24;
                 Write_DS1307(ADDRESS_HOUR_ALARM, hourAlarm);
             }
             if (KEYDOWN) {
@@ -552,7 +356,7 @@ void SetUpAlarm() {
                 Write_DS1307(ADDRESS_HOUR_ALARM, hourAlarm);
             }
             if (KEYDOWN_HOLD) {
-                hourAlarm = (hourAlarm - 3);
+                hourAlarm = (hourAlarm - 5);
                 if (hourAlarm > 23)
                     hourAlarm = 23;
                 Write_DS1307(ADDRESS_HOUR_ALARM, hourAlarm);
@@ -576,7 +380,7 @@ void SetUpAlarm() {
                 Write_DS1307(ADDRESS_MINUTE_ALARM, minuteAlarm);
             }
             if (KEYUP_HOLD) {
-                minuteAlarm = (minuteAlarm + 9) % 60;
+                minuteAlarm = (minuteAlarm + 10) % 60;
                 Write_DS1307(ADDRESS_MINUTE_ALARM, minuteAlarm);
             }
             if (KEYDOWN) {
@@ -586,7 +390,7 @@ void SetUpAlarm() {
                 Write_DS1307(ADDRESS_MINUTE_ALARM, minuteAlarm);
             }
             if (KEYDOWN_HOLD) {
-                minuteAlarm = (minuteAlarm - 9);
+                minuteAlarm = (minuteAlarm - 10);
                 if (minuteAlarm > 59)
                     minuteAlarm = 59;
                 Write_DS1307(ADDRESS_MINUTE_ALARM, minuteAlarm);

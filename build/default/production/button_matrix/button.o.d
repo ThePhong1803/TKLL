@@ -1,4 +1,5 @@
-build/default/production/button_matrix/button.o:  \
-	C:/Users/PC/Desktop/Digital\ Clock/button_matrix/button.c  \
-	C:/Users/PC/Desktop/Digital\ Clock/button_matrix/button.h  \
+build/default/production/button_matrix/button.o : \
+	D:/Subjects/DA\ TKLL\ document/TKLL/button_matrix/button.c \
+	D:/Subjects/DA\ TKLL\ document/TKLL/button_matrix/button.h \
+	C:/Program\ Files\ (x86)/Microchip/mplabc18/v3.47/h/p18f4620.h \
 

@@ -4,6 +4,7 @@
 #include "..\lcd\lcd.h"
 #include "..\uart\uart.h"
 #include "..\i2c\i2c.h"
+#include "math.h"
 
 int status = TIME_SCREEN;
 int last_state = NULL;
@@ -20,6 +21,22 @@ int last_state = NULL;
 #define CMD_TIME3 12
 #define CMD_TIME4 14
 //cong define
+#define     INIT_SYSTEM         0
+#define     SET_HOUR_ALARM      1
+#define     SET_MINUTE_ALARM    2
+#define     BIT_ALARM           3
+#define     COMPARE             4
+#define     ALARM               5
+#define     BACK_MENU           -1
+
+#define     SET_HOUR            6
+#define     SET_MINUTE          7
+#define     SET_DAY             8
+#define     SET_DATE            9
+#define     SET_MONTH           10
+#define     SET_YEAR            11
+#define     ENABLE              1
+#define     DISABLE             0
 
 #define SUCCESS     99
 #define HOUR_1      100
@@ -60,9 +77,18 @@ int last_state = NULL;
 #define HANOI      55
 #define WAIT       56
 
+#define VALUE0     57
+#define VALUE1     58
+#define VALUE2     59
+#define VALUE3     60
+#define VALUE4     61
+#define VALUE5     62
+
 int modify = 0;
+unsigned char timeBlink_1 = 0;
 int last_modify = 0;
 unsigned char timer_clock_config = 0;
+unsigned char statusSetUpTime = INIT_SYSTEM;
 
 int status_worldTime = TOKYO;
 int last_statusWT = TOKYO;
@@ -89,6 +115,10 @@ unsigned char flagDHT = 0;
 unsigned char flagInternet = 0;
 unsigned char flagUart = 0;
 // CONG END
+unsigned char second_mf = 0, minute_mf = 0, hour_mf = 0;
+unsigned char day_mf = 0;
+unsigned char date_mf = 0, month_mf = 0, year_mf = 0;
+unsigned char bitEnable_1 = ENABLE;
 
 int cmd_state = CMD_INIT;
 int cmd_date = CMD_INIT; //cong
@@ -96,9 +126,21 @@ unsigned char hour_t, minute_t, second_t,
         temp1, temp2, returnFlag = 0, setTimeFlag = 0;
 int year_t, month_t, date_t, day_t;
 unsigned char run_stopwatch_flag = 0,
-        hour_st = 0, minute_st = 0, second_st = 0, centi_second = 0, timer3_tick;
+        hour_st = 0, minute_st = 0, second_st = 0;
 
+struct time_stop_watch {
+    unsigned char hour, minute, second;
+};
+struct time_stop_watch arr_time[6];
+unsigned char index_arr = 0; //index for arr_time with max value is 5
+unsigned char status_stop_time, status_last_stop_time = VALUE0;
+void display_stop_time();
+void reset_array_time();
+void display_value(unsigned char position, struct time_stop_watch value);
 int console_state = CONSOLE_WAIT;
+
+void DisplayTimeForModify();
+void SetUpTime();
 
 unsigned char getUartBufferChar();
 void uart_console();
@@ -121,6 +163,7 @@ void display_timer_clock(); //display lcd for timer clock function
 void run_timer_clock(); //run timer clock function
 void fsm_uart_mode();
 
+
 void menuControl() {
     switch (status) {
         case TIME_SCREEN:
@@ -134,11 +177,11 @@ void menuControl() {
             break;
 
         case ALARM_CLOCK:
-            LcdPrintStringS(0, 0, ">Alarm Clock");
-            LcdPrintStringS(1, 0, " Counter Clock");
+            LcdPrintStringS(0, 0, ">ALARM CLOCK");
+            LcdPrintStringS(1, 0, " LUNAR CALENDAR");
             if (KEYDOWN > DEBOUNCE_THRS) {
                 last_state = status;
-                status = STOPWATCH;
+                status = LUNAR_CALENDAR;
             }
             if (KEYOK > DEBOUNCE_THRS) {
                 status = SET_ALARM;
@@ -147,7 +190,6 @@ void menuControl() {
                 status = BACK;
             }
             break;
-
         case SET_ALARM:
             DisplayAlarmTime();
             SetUpAlarm();
@@ -156,14 +198,40 @@ void menuControl() {
                 status = ALARM_CLOCK;
             }
             break;
+        case LUNAR_CALENDAR:
+            if (last_state == ALARM_CLOCK) {
+                LcdPrintStringS(0, 0, " ALARM CLOCK");
+                LcdPrintStringS(1, 0, ">LUNAR CALENDAR");
+            } else {
+                LcdPrintStringS(0, 0, ">LUNAR CALENDAR");
+                LcdPrintStringS(1, 0, " STOP WATCH");
+            }
+            if (KEYDOWN > DEBOUNCE_THRS) {
+                last_state = status;
+                status = STOPWATCH;
+            }
+            if (KEYOK > DEBOUNCE_THRS) {
+                status = DISPLAY_LUNAR;
+            }
+            if (KEYUP > DEBOUNCE_THRS) {
+                last_state = status;
+                status = ALARM_CLOCK;
+            }
+            break;
+        case DISPLAY_LUNAR:
+            if(KEYOK){
+                status = LUNAR_CALENDAR;
+            }
+            
+            break;
 
         case STOPWATCH:
-            if (last_state == ALARM_CLOCK) {
-                LcdPrintStringS(0, 0, " Alarm Clock");
-                LcdPrintStringS(1, 0, ">Counter Clock");
+            if (last_state == LUNAR_CALENDAR) {
+                LcdPrintStringS(0, 0, " LUNAR CALENDAR");
+                LcdPrintStringS(1, 0, ">STOP WATCH");
             } else {
-                LcdPrintStringS(0, 0, ">Counter Clock");
-                LcdPrintStringS(1, 0, " Timer Clock");
+                LcdPrintStringS(0, 0, ">STOP WATCH");
+                LcdPrintStringS(1, 0, " TIMER CLOCK");
             }
             if (KEYDOWN > DEBOUNCE_THRS) {
                 last_state = status;
@@ -171,50 +239,67 @@ void menuControl() {
             }
             if (KEYUP > DEBOUNCE_THRS) {
                 last_state = status;
-                status = ALARM_CLOCK;
+                status = LUNAR_CALENDAR;
             }
             if (KEYOK > DEBOUNCE_THRS) {
                 status = RUN_STOPWATCH;
+                reset_array_time();
+                run_stopwatch_flag = 0;
             }
             break;
 
         case RUN_STOPWATCH:
             display_stopwatch();
             if (run_stopwatch_flag) run_stopwatch();
-            if (KEYUP) {
-                last_sec = Read_DS1307(ADDRESS_SECOND);
-                curr_sec = Read_DS1307(ADDRESS_SECOND);
-                run_stopwatch_flag = 1; //key up act like start button
-            }
-            if (KEYDOWN) {
-                run_stopwatch_flag = 0; // key down act like stop button
-            }
-            if (KEYDOWN_HOLD) {
+            if(KEYUP_HOLD){
+                run_stopwatch_flag = 0;
                 hour_st = 0;
                 minute_st = 0;
                 second_st = 0;
-                centi_second = 0;
-                timer3_tick = 0;
+            }
+            else if (KEYUP && run_stopwatch_flag == 0) {
+                run_stopwatch_flag = 1; //key up act like start button
+                last_sec = Read_DS1307(ADDRESS_SECOND);
+                curr_sec = Read_DS1307(ADDRESS_SECOND);
+            }
+            else if(KEYUP && run_stopwatch_flag == 1){
+                run_stopwatch_flag = 0;
+            }
+            if (KEYDOWN) {
+                if (index_arr < 5) {
+                    arr_time[index_arr].hour = hour_st;
+                    arr_time[index_arr].minute = minute_st;
+                    arr_time[index_arr].second = second_st;
+                    index_arr++;
+                }
+            }
+            if (KEYDOWN_HOLD) {
+                status = DISPLAY_STOP_TIME;
+                run_stopwatch_flag = 0;
+                status_stop_time = VALUE1;
+                status_last_stop_time = VALUE1;
             }
             if (KEYOK) {
                 run_stopwatch_flag = 0;
                 hour_st = 0;
                 minute_st = 0;
                 second_st = 0;
-                centi_second = 0;
-                timer3_tick = 0;
                 returnFlag = 0;
                 status = STOPWATCH;
             }
             break;
 
+        case DISPLAY_STOP_TIME:
+            display_stop_time();
+            break;
+
         case TIMER_CLOCK:
             if (last_state == STOPWATCH) {
-                LcdPrintStringS(0, 0, " Counter Clock");
-                LcdPrintStringS(1, 0, ">Timer Clock");
+                LcdPrintStringS(0, 0, " STOP WATCH");
+                LcdPrintStringS(1, 0, ">TIMER CLOCK");
             } else {
-                LcdPrintStringS(0, 0, ">Timer Clock");
-                LcdPrintStringS(1, 0, " Time Modify");
+                LcdPrintStringS(0, 0, ">TIMER CLOCK");
+                LcdPrintStringS(1, 0, " TIME MODIFY");
             }
             if (KEYDOWN > DEBOUNCE_THRS) {
                 last_state = status;
@@ -235,11 +320,11 @@ void menuControl() {
             break;
         case TIME_MODIFY:
             if (last_state == TIMER_CLOCK) {
-                LcdPrintStringS(0, 0, " Timer Clock");
-                LcdPrintStringS(1, 0, ">Time Modify");
+                LcdPrintStringS(0, 0, " TIMER CLOCK");
+                LcdPrintStringS(1, 0, ">TIME MODIFY");
             } else {
-                LcdPrintStringS(0, 0, ">Time Modify");
-                LcdPrintStringS(1, 0, " World Time");
+                LcdPrintStringS(0, 0, ">TIME MODIFY");
+                LcdPrintStringS(1, 0, " GLOBAL TIME");
             }
             if (KEYDOWN > DEBOUNCE_THRS) {
                 last_state = status;
@@ -265,7 +350,7 @@ void menuControl() {
             if (KEYOK > DEBOUNCE_THRS) {
                 status = TIME_SCREEN;
             }
-            if(flagInternet && uart_mode == 1){
+            if (flagInternet && uart_mode == 1) {
                 status = TIME_SCREEN;
                 flagInternet = 0;
             }
@@ -273,11 +358,11 @@ void menuControl() {
 
         case WORLD_TIME:
             if (last_state == TIME_MODIFY) {
-                LcdPrintStringS(0, 0, " Time Modify");
-                LcdPrintStringS(1, 0, ">World Time");
+                LcdPrintStringS(0, 0, " TIME MODIFY");
+                LcdPrintStringS(1, 0, ">GLOBAL TIME");
             } else {
-                LcdPrintStringS(0, 0, ">World Time");
-                LcdPrintStringS(1, 0, " Weather");
+                LcdPrintStringS(0, 0, ">GLOBAL TIME");
+                LcdPrintStringS(1, 0, " WEATHER");
             }
             if (KEYDOWN > DEBOUNCE_THRS) {
                 last_state = status;
@@ -297,11 +382,11 @@ void menuControl() {
             break;
         case TEMP_HUMI:
             if (last_state == WORLD_TIME) {
-                LcdPrintStringS(0, 0, " World Time");
-                LcdPrintStringS(1, 0, ">Weather");
+                LcdPrintStringS(0, 0, " GLOBAL TIME");
+                LcdPrintStringS(1, 0, ">WEATHER");
             } else {
-                LcdPrintStringS(0, 0, ">Weather");
-                LcdPrintStringS(1, 0, " Back");
+                LcdPrintStringS(0, 0, ">WEATHER");
+                LcdPrintStringS(1, 0, " BACK");
             }
             if (KEYDOWN > DEBOUNCE_THRS) {
                 last_state = status;
@@ -328,7 +413,7 @@ void menuControl() {
             }
             break;
         case WEATHER_DISPLAY:
-            LcdPrintStringS(0, 0, "TEMP:   *C");
+            LcdPrintStringS(0, 0, "TEMP:   C");
             LcdPrintStringS(1, 0, "HUMI:   %");
             LcdPrintNumS(0, 6, temperature);
             LcdPrintNumS(1, 6, humidity);
@@ -337,7 +422,7 @@ void menuControl() {
                 last_sec = curr_sec;
                 count++;
             }
-            if(count == 5 && flagDHT == 1){
+            if (count == 5 && flagDHT == 1) {
                 UartSendString("!DHT#\r\n");
                 count = 0;
                 flagDHT = 0;
@@ -348,8 +433,8 @@ void menuControl() {
             }
             break;
         case BACK:
-            LcdPrintStringS(0, 0, " Weather");
-            LcdPrintStringS(1, 0, ">Back");
+            LcdPrintStringS(0, 0, " WEATHER");
+            LcdPrintStringS(1, 0, ">BACK");
             if (KEYUP > DEBOUNCE_THRS) {
                 last_state = status;
                 status = TEMP_HUMI;
@@ -387,6 +472,188 @@ void run_stopwatch() {
     }
 }
 
+void reset_array_time() {
+    int i = 0;
+    index_arr = 0;
+    for(i; i < 6; i++) {
+        arr_time[i].hour = 0;
+        arr_time[i].minute = 0;
+        arr_time[i].second = 0;
+    }
+}
+
+void display_stop_time() {
+    switch (status_stop_time) {
+        case VALUE1:
+            LcdPrintStringS(0, 0, ">1. ");
+            LcdPrintStringS(1, 0, " 2. ");
+            LcdPrintStringS(0, 6, ":");
+            LcdPrintStringS(0, 9, ":");
+            LcdPrintStringS(1, 6, ":");
+            LcdPrintStringS(1, 9, ":");
+            display_value(0,arr_time[0]);
+            display_value(1,arr_time[1]);
+            if(KEYDOWN > DEBOUNCE_THRS){
+                status_stop_time = VALUE2;
+                status_last_stop_time = VALUE1;
+            }
+            if(KEYUP > DEBOUNCE_THRS){
+                status_stop_time = VALUE5;
+                status_last_stop_time = VALUE1;
+            }
+            if(KEYUP_HOLD || KEYDOWN_HOLD){
+                reset_array_time();
+            }
+            if(KEYOK){
+                status = RUN_STOPWATCH;
+            }
+            break;
+        case VALUE2:
+            if(status_last_stop_time == VALUE1){
+                LcdPrintStringS(0, 0, " 1. ");
+                LcdPrintStringS(1, 0, ">2. ");
+                display_value(0,arr_time[0]);
+                display_value(1,arr_time[1]);
+            }
+            else {
+                LcdPrintStringS(0, 0, ">2. ");
+                LcdPrintStringS(1, 0, " 3. ");
+                display_value(0,arr_time[1]);
+                display_value(1,arr_time[2]);
+            }
+            LcdPrintStringS(0, 6, ":");
+            LcdPrintStringS(0, 9, ":");
+            LcdPrintStringS(1, 6, ":");
+            LcdPrintStringS(1, 9, ":");
+            if(KEYDOWN > DEBOUNCE_THRS){
+                status_stop_time = VALUE3;
+                status_last_stop_time = VALUE2;
+            }
+            if(KEYUP > DEBOUNCE_THRS){
+                status_stop_time = VALUE1;
+                status_last_stop_time = VALUE2;
+            }
+            if(KEYUP_HOLD || KEYDOWN_HOLD){
+                reset_array_time();
+            }
+            if(KEYOK){
+                status = RUN_STOPWATCH;
+            }
+            break;
+        case VALUE3:
+            if(status_last_stop_time == VALUE2){
+                LcdPrintStringS(0, 0, " 2. ");
+                LcdPrintStringS(1, 0, ">3. ");
+                display_value(0,arr_time[1]);
+                display_value(1,arr_time[2]);
+            }
+            else {
+                LcdPrintStringS(0, 0, ">3. ");
+                LcdPrintStringS(1, 0, " 4. ");
+                display_value(0,arr_time[2]);
+                display_value(1,arr_time[3]);
+            }
+            LcdPrintStringS(0, 6, ":");
+            LcdPrintStringS(0, 9, ":");
+            LcdPrintStringS(1, 6, ":");
+            LcdPrintStringS(1, 9, ":");
+            if(KEYDOWN > DEBOUNCE_THRS){
+                status_stop_time = VALUE4;
+                status_last_stop_time = VALUE3;
+            }
+            if(KEYUP > DEBOUNCE_THRS){
+                status_stop_time = VALUE2;
+                status_last_stop_time = VALUE3;
+            }
+            if(KEYUP_HOLD || KEYDOWN_HOLD){
+                reset_array_time();
+            }
+            if(KEYOK){
+                status = RUN_STOPWATCH;
+            }
+            break;
+        case VALUE4:
+            if(status_last_stop_time == VALUE3){
+                LcdPrintStringS(0, 0, " 3. ");
+                LcdPrintStringS(1, 0, ">4. ");
+                display_value(0,arr_time[2]);
+                display_value(1,arr_time[3]);
+            }
+            else {
+                LcdPrintStringS(0, 0, ">4. ");
+                LcdPrintStringS(1, 0, " 5. ");
+                display_value(0,arr_time[3]);
+                display_value(1,arr_time[4]);
+            }
+            LcdPrintStringS(0, 6, ":");
+            LcdPrintStringS(0, 9, ":");
+            LcdPrintStringS(1, 6, ":");
+            LcdPrintStringS(1, 9, ":");
+            if(KEYDOWN > DEBOUNCE_THRS){
+                status_stop_time = VALUE5;
+                status_last_stop_time = VALUE4;
+            }
+            if(KEYUP > DEBOUNCE_THRS){
+                status_stop_time = VALUE3;
+                status_last_stop_time = VALUE4;
+            }
+            if(KEYUP_HOLD || KEYDOWN_HOLD){
+                reset_array_time();
+            }
+            if(KEYOK){
+                status = RUN_STOPWATCH;
+            }
+            break;
+        case VALUE5:
+            LcdPrintStringS(0, 0, " 4. ");
+            LcdPrintStringS(1, 0, ">5. ");
+            display_value(0,arr_time[3]);
+            display_value(1,arr_time[4]);
+            LcdPrintStringS(0, 6, ":");
+            LcdPrintStringS(0, 9, ":");
+            LcdPrintStringS(1, 6, ":");
+            LcdPrintStringS(1, 9, ":");
+            if(KEYDOWN > DEBOUNCE_THRS){
+                status_stop_time = VALUE1;
+                status_last_stop_time = VALUE5;
+            }
+            if(KEYUP > DEBOUNCE_THRS){
+                status_stop_time = VALUE4;
+                status_last_stop_time = VALUE5;
+            }
+            if(KEYUP_HOLD || KEYDOWN_HOLD){
+                reset_array_time();
+            }
+            if(KEYOK){
+                status = RUN_STOPWATCH;
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+void display_value(unsigned char position, struct time_stop_watch value) {
+    if (value.hour < 10) {
+        LcdPrintNumS(position, 4, 0);
+        LcdPrintNumS(position, 5, value.hour);
+    } else {
+        LcdPrintNumS(position, 4, value.hour);
+    }
+    if (value.minute < 10) {
+        LcdPrintNumS(position, 7, 0);
+        LcdPrintNumS(position, 8, value.minute);
+    } else {
+        LcdPrintNumS(position, 7, value.minute);
+    }
+    if (value.second < 10) {
+        LcdPrintNumS(position, 10, 0);
+        LcdPrintNumS(position, 11, value.second);
+    } else {
+        LcdPrintNumS(position, 10, value.second);
+    }
+}
+
 void display_stopwatch() {
     LcdPrintStringS(0, 0, "   STOP WATCH  ");
     LcdPrintStringS(1, 0, "  ");
@@ -407,12 +674,6 @@ void display_stopwatch() {
         LcdPrintNumS(1, 11, second_st);
     } else
         LcdPrintNumS(1, 10, second_st);
-    //    LcdPrintStringS(1, 10, ":");
-    //    if (centi_second < 10) {
-    //        LcdPrintStringS(1, 11, "0");
-    //        LcdPrintNumS(1, 12, centi_second);
-    //    } else
-    //        LcdPrintNumS(1, 11, centi_second);
 }
 
 void display_timer_clock() {
@@ -457,12 +718,12 @@ void run_timer_clock() {
                     hour_tc = 23;
             }
             if (KEYUP_HOLD > DEBOUNCE_THRS) {
-                hour_tc += 3;
+                hour_tc += 5;
                 if (hour_tc > 23)
                     hour_tc = 0;
             }
             if (KEYDOWN_HOLD > DEBOUNCE_THRS) {
-                hour_tc -= 3;
+                hour_tc -= 5;
                 if (hour_tc < 0)
                     hour_tc = 23;
             }
@@ -486,12 +747,12 @@ void run_timer_clock() {
                 }
             }
             if (KEYUP_HOLD > DEBOUNCE_THRS) {
-                minute_tc += 9;
+                minute_tc += 20;
                 if (minute_tc > 59)
                     minute_tc = 0;
             }
             if (KEYDOWN_HOLD > DEBOUNCE_THRS) {
-                minute_tc -= 9;
+                minute_tc -= 20;
                 if (minute_tc < 0) {
                     minute_tc = 59;
                 }
@@ -516,12 +777,12 @@ void run_timer_clock() {
                 }
             }
             if (KEYUP_HOLD > DEBOUNCE_THRS) {
-                second_tc += 9;
+                second_tc += 20;
                 if (second_tc > 59)
                     second_tc = 0;
             }
             if (KEYDOWN_HOLD > DEBOUNCE_THRS) {
-                second_tc -= 9;
+                second_tc -= 20;
                 if (second_tc < 0) {
                     second_tc = 59;
                 }
@@ -746,7 +1007,7 @@ void command_parse() {
                 Write_DS1307(ADDRESS_HOUR, hour_t);
                 Write_DS1307(ADDRESS_MINUTE, minute_t);
                 write_ds1307(ADDRESS_SECOND, second_t);
-                if(flagUart){
+                if (flagUart) {
                     UartSendString("\r\nConfiguration Time Success!\r\n");
                 }
             } else {
@@ -915,7 +1176,7 @@ void command_parse() {
                 Write_DS1307(ADDRESS_MONTH, month_t);
                 Write_DS1307(ADDRESS_DATE, date_t);
                 Write_DS1307(ADDRESS_DAY, day_t);
-                if(flagUart){
+                if (flagUart) {
                     UartSendString("\r\nConfiguration Date Success!\r\n");
                 }
                 flagInternet = 1;
@@ -1049,10 +1310,17 @@ void fsm_timeModify() {
             if (KEYOK > DEBOUNCE_THRS) {
                 modify = 3;
                 returnOK = 1;
+                second_mf = Read_DS1307(ADDRESS_SECOND);
+                minute_mf = Read_DS1307(ADDRESS_MINUTE);
+                hour_mf = Read_DS1307(ADDRESS_HOUR);
+                day_mf = Read_DS1307(ADDRESS_DAY);
+                date_mf = Read_DS1307(ADDRESS_DATE);
+                month_mf = Read_DS1307(ADDRESS_MONTH);
+                year_mf = Read_DS1307(ADDRESS_YEAR);
             }
             break;
         case 3: //display lcd to modify in mode use button
-            DisplayTime();
+            DisplayTimeForModify();
             SetUpTime();
             if (setTimeFlag) {
                 modify = 0;
@@ -1372,7 +1640,7 @@ unsigned char check_day(unsigned char mode) {
                 tmp_date = 31;
                 tmp_month = 12;
                 tmp_year -= 1;
-            }                //change date leads to change month
+            }//change date leads to change month
             else if (check_month(tmp_month) == 0) {
                 //previous month has 31 days
                 tmp_month -= 1;
@@ -1398,7 +1666,7 @@ unsigned char check_day(unsigned char mode) {
             tmp_month = 1;
             tmp_date = 1;
             tmp_year += 1;
-        }            //increase day lead to change month
+        }//increase day lead to change month
         else if (check_month(tmp_month) == 0 && tmp_date > 30) {
             //current month has 30 days
             tmp_month += 1;
@@ -1422,4 +1690,345 @@ unsigned char check_day(unsigned char mode) {
     Write_DS1307(ADDRESS_DAY, tmp_day);
     Write_DS1307(ADDRESS_MONTH, tmp_month);
     Write_DS1307(ADDRESS_YEAR, tmp_year);
+}
+
+void DisplayTimeForModify(){
+    //////day_mf
+    switch (day_mf) {
+        case 1:
+            LcdPrintStringS(0, 0, "SUN");
+            break;
+        case 2:
+            LcdPrintStringS(0, 0, "MON");
+            break;
+        case 3:
+            LcdPrintStringS(0, 0, "TUE");
+            break;
+        case 4:
+            LcdPrintStringS(0, 0, "WED");
+            break;
+        case 5:
+            LcdPrintStringS(0, 0, "THU");
+            break;
+        case 6:
+            LcdPrintStringS(0, 0, "FRI");
+            break;
+        case 7:
+            LcdPrintStringS(0, 0, "SAT");
+            break;
+    }
+    if (hour_mf < 10) {
+        LcdPrintStringS(0, 4, "0");
+        LcdPrintNumS(0, 5, hour_mf);
+    } else
+        LcdPrintNumS(0, 4, hour_mf);
+
+    LcdPrintStringS(0, 6, ":");
+    if (minute_mf < 10) {
+        LcdPrintStringS(0, 7, "0");
+        LcdPrintNumS(0, 8, minute_mf);
+    } else
+        LcdPrintNumS(0, 7, minute_mf);
+
+    LcdPrintStringS(0, 9, ":");
+    if (second_mf < 10) {
+        LcdPrintStringS(0, 10, "0");
+        LcdPrintNumS(0, 11, second_mf);
+    } else
+        LcdPrintNumS(0, 10, second_mf);
+
+
+    if (returnOK == 1) {
+        LcdPrintStringS(0, 13, "OK ");
+    }
+    else if (returnOK == 2){
+        LcdPrintStringS(0, 12, "EXIT");
+    }
+
+    switch (month_mf) {
+        case 1:
+            LcdPrintStringS(1, 2, "JAN");
+            break;
+        case 2:
+            LcdPrintStringS(1, 2, "FEB");
+            break;
+        case 3:
+            LcdPrintStringS(1, 2, "MAR");
+            break;
+        case 4:
+            LcdPrintStringS(1, 2, "APR");
+            break;
+        case 5:
+            LcdPrintStringS(1, 2, "MAY");
+            break;
+        case 6:
+            LcdPrintStringS(1, 2, "JUN");
+            break;
+        case 7:
+            LcdPrintStringS(1, 2, "JUL");
+            break;
+        case 8:
+            LcdPrintStringS(1, 2, "AUG");
+            break;
+        case 9:
+            LcdPrintStringS(1, 2, "SEP");
+            break;
+        case 10:
+            LcdPrintStringS(1, 2, "OCT");
+            break;
+        case 11:
+            LcdPrintStringS(1, 2, "NOV");
+            break;
+        case 12:
+            LcdPrintStringS(1, 2, "DEC");
+            break;
+    }
+
+    LcdPrintStringS(1, 5, " ");
+    if (date_mf < 10) {
+        LcdPrintStringS(1, 6, " ");
+        LcdPrintNumS(1, 7, date_mf);
+    } else
+        LcdPrintNumS(1, 6, date_mf);
+    LcdPrintStringS(1, 8, " ");
+    LcdPrintNumS(1, 9, 20);
+    if(year_mf < 10){
+        LcdPrintNumS(1, 11, 0);
+        LcdPrintNumS(1, 12, year_mf);
+    }
+    else LcdPrintNumS(1, 11, year_mf);
+}
+
+void SetUpTime() {
+    switch (statusSetUpTime) {
+        case INIT_SYSTEM:
+            if (KEYOK && (bitEnable_1 == ENABLE))
+                statusSetUpTime = SET_HOUR;
+            break;
+        case SET_HOUR:
+            bitEnable_1 = DISABLE;
+            timeBlink_1 = (timeBlink_1 + 1) % 20;
+            if (timeBlink_1 > 15)
+                LcdPrintStringS(0, 4, "  ");
+            if (KEYUP) {
+                hour_mf = (hour_mf + 1) % 24;
+//                Write_DS1307(ADDRESS_HOUR, hour);
+            }
+            if (KEYDOWN) {
+                hour_mf = (hour_mf - 1);
+                if (hour_mf > 23)
+                    hour_mf = 23;
+//                Write_DS1307(ADDRESS_HOUR, hour);
+            }
+            if (KEYUP_HOLD) {
+                hour_mf = (hour_mf + 5) % 24;
+//                Write_DS1307(ADDRESS_HOUR, hour);
+            }
+            if (KEYDOWN_HOLD) {
+                hour_mf = (hour_mf - 5);
+                if (hour_mf > 23)
+                    hour_mf = 23;
+//                Write_DS1307(ADDRESS_HOUR, hour);
+            }
+            if (KEYOK)
+                statusSetUpTime = SET_MINUTE;
+            if (KEYOK_HOLD) {
+                LcdClearS();
+                bitEnable_1 = ENABLE;
+                statusSetUpTime = BACK_MENU;
+            }
+            break;
+        case SET_MINUTE:
+            bitEnable_1 = DISABLE;
+            timeBlink_1 = (timeBlink_1 + 1) % 20;
+            if (timeBlink_1 > 15)
+                LcdPrintStringS(0, 7, "  ");
+            if (KEYUP) {
+                minute_mf = (minute_mf + 1) % 60;
+//                Write_DS1307(ADDRESS_MINUTE, minute);
+            }
+            if (KEYDOWN) {
+                minute_mf = (minute_mf - 1);
+                if (minute_mf > 59)
+                    minute_mf = 59;
+//                Write_DS1307(ADDRESS_MINUTE, minute);
+            }
+            if (KEYUP_HOLD) {
+                minute_mf = (minute_mf + 20) % 60;
+//                Write_DS1307(ADDRESS_MINUTE, minute);
+            }
+            if (KEYDOWN_HOLD) {
+                minute_mf = (minute_mf - 20);
+                if (minute_mf > 59)
+                    minute_mf = 59;
+//                Write_DS1307(ADDRESS_MINUTE, minute);
+            }
+            if (KEYOK)
+                statusSetUpTime = SET_DAY;
+            if (KEYOK_HOLD) {
+                LcdClearS();
+                bitEnable_1 = ENABLE;
+                statusSetUpTime = BACK_MENU;
+            }
+            break;
+        case SET_DAY:
+            bitEnable_1 = DISABLE;
+            timeBlink_1 = (timeBlink_1 + 1) % 20;
+            if (timeBlink_1 > 15)
+                LcdPrintStringS(0, 0, "   ");
+            if (KEYUP) {
+                day_mf = day_mf + 1;
+                if (day_mf > 7)
+                    day_mf = 1;
+//                Write_DS1307(ADDRESS_DAY, day);
+            }
+            if (KEYDOWN) {
+                day_mf = day_mf - 1;
+                if (day_mf > 7)
+                    day_mf = 7;
+//                Write_DS1307(ADDRESS_DAY, day);
+            }
+            if (KEYOK)
+                statusSetUpTime = SET_DATE;
+            if (KEYOK_HOLD) {
+                LcdClearS();
+                bitEnable_1 = ENABLE;
+                statusSetUpTime = BACK_MENU;
+            }
+            break;
+        case SET_DATE:
+            bitEnable_1 = DISABLE;
+            timeBlink_1 = (timeBlink_1 + 1) % 20;
+            if (timeBlink_1 > 15)
+                LcdPrintStringS(1, 6, "  ");
+            if (KEYUP) {
+                date_mf = date_mf + 1;
+                if (date_mf > 31)
+                    date_mf = 1;
+//                Write_DS1307(ADDRESS_DATE, date);
+            }
+            if (KEYDOWN) {
+                date_mf = date_mf - 1;
+                if (date_mf < 1)
+                    date_mf = 31;
+//                Write_DS1307(ADDRESS_DATE, date);
+            }
+            if (KEYUP_HOLD) {
+                date_mf = date_mf + 10;
+                if (date_mf > 31)
+                    date_mf = 1;
+//                Write_DS1307(ADDRESS_DATE, date);
+            }
+            if (KEYDOWN_HOLD) {
+                date_mf = date_mf - 10;
+                if (date_mf < 1)
+                    date_mf = 31;
+//                Write_DS1307(ADDRESS_DATE, date);
+            }
+            if (KEYOK)
+                statusSetUpTime = SET_MONTH;
+            if (KEYOK_HOLD) {
+                LcdClearS();
+                bitEnable_1 = ENABLE;
+                statusSetUpTime = BACK_MENU;
+            }
+            break;
+        case SET_MONTH:
+            bitEnable_1 = DISABLE;
+            timeBlink_1 = (timeBlink_1 + 1) % 20;
+            if (timeBlink_1 > 15)
+                LcdPrintStringS(1, 2, "   ");
+            if (KEYUP) {
+                month_mf = month_mf + 1;
+                if (month_mf > 12)
+                    month_mf = 1;
+//                Write_DS1307(ADDRESS_MONTH, month);
+            }
+            if (KEYDOWN) {
+                month_mf = month_mf - 1;
+                if (month_mf < 1)
+                    month_mf = 12;
+//                Write_DS1307(ADDRESS_MONTH, month);
+            }
+            if (KEYOK)
+                statusSetUpTime = SET_YEAR;
+            if (KEYOK_HOLD) {
+                LcdClearS();
+                bitEnable_1 = ENABLE;
+                statusSetUpTime = BACK_MENU;
+            }
+            break;
+        case SET_YEAR:
+            bitEnable_1 = DISABLE;
+            timeBlink_1 = (timeBlink_1 + 1) % 20;
+            if (timeBlink_1 > 15)
+                LcdPrintStringS(1, 9, "    ");
+            if (KEYUP) {
+                year_mf = year_mf + 1;
+                if (year_mf > 99)
+                    year_mf = 0;
+//                Write_DS1307(ADDRESS_YEAR, year);
+            }
+            if (KEYDOWN) {
+                year_mf = year_mf - 1;
+                if (year_mf < 99)
+                    year_mf = 99;
+//                Write_DS1307(ADDRESS_YEAR, year);
+            }
+            if (KEYOK) {
+                LcdClearS();
+                bitEnable_1 = ENABLE;
+                statusSetUpTime = BACK_MENU;
+            }
+            if (KEYOK_HOLD) {
+                LcdClearS();
+                bitEnable_1 = ENABLE;
+                statusSetUpTime = BACK_MENU;
+            }
+            break;
+        case BACK_MENU:
+            bitEnable_1 = DISABLE;
+            DisplayTimeForModify();
+            timeBlink_1 = (timeBlink_1 + 1) % 20;
+            if (timeBlink_1 > 15)
+                LcdPrintStringS(0, 12, "    ");
+            if (KEYOK && returnOK == 1) {
+                //if key ok is pressed, set the return flags;
+                LcdClearS();
+                statusSetUpTime = INIT_SYSTEM;
+                bitEnable_1 = ENABLE;
+                setTimeFlag = 1;
+                returnOK = 0;
+                Write_DS1307(ADDRESS_HOUR, hour_mf);
+                Write_DS1307(ADDRESS_MINUTE, minute_mf);
+                Write_DS1307(ADDRESS_DAY, day_mf);
+                Write_DS1307(ADDRESS_DATE, date_mf);
+                Write_DS1307(ADDRESS_MONTH, month_mf);
+                Write_DS1307(ADDRESS_YEAR, year_mf);
+            }
+            if(KEYOK && returnOK == 2){
+                LcdClearS();
+                statusSetUpTime = INIT_SYSTEM;
+                bitEnable_1 = ENABLE;
+                setTimeFlag = 1;
+                returnOK = 0;
+            }
+            if(KEYDOWN){
+                if(returnOK == 1){
+                    returnOK = 2;
+                }
+                else if(returnOK == 2){
+                    returnOK = 1;
+                }
+            }
+            if (KEYUP) {
+                //if key up is press, back to set up time
+                LcdClearS();
+                statusSetUpTime = INIT_SYSTEM;
+                bitEnable_1 = ENABLE;
+            }
+        default:
+            break;
+
+    }
 }

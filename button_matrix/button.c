@@ -59,7 +59,7 @@ unsigned char isKeyPressed(unsigned char keycode){
 
 unsigned char isKeyHold(unsigned char keycode){
     if(key_code[keycode] == HOLDTIME){
-        key_code[keycode] = 0;
+//        key_code[keycode] = 0;
         return 1;
     } else return 0;
 }
