@@ -48,6 +48,7 @@ Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 317 : suspicious pointer 
 Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 320 : suspicious pointer conversion
 Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 323 : suspicious pointer conversion
 Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 337 : suspicious pointer conversion
+<<<<<<< HEAD
 Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 351 : call of function without prototype
 Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 360 : suspicious pointer conversion
 Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 374 : call of function without prototype
@@ -74,3 +75,31 @@ Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 595 : call of function wi
 Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 601 : call of function without prototype
 Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 679 : call of function without prototype
 Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 687 : call of function without prototype
+=======
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 361 : call of function without prototype
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 370 : suspicious pointer conversion
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 394 : call of function without prototype
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 403 : suspicious pointer conversion
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 419 : call of function without prototype
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 428 : suspicious pointer conversion
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 444 : call of function without prototype
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 453 : suspicious pointer conversion
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 469 : call of function without prototype
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 478 : suspicious pointer conversion
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 492 : call of function without prototype
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 497 : call of function without prototype
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 507 : suspicious pointer conversion
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 510 : call of function without prototype
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 518 : call of function without prototype
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 539 : suspicious pointer conversion
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 563 : call of function without prototype
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 573 : suspicious pointer conversion
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 597 : call of function without prototype
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 607 : suspicious pointer conversion
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 622 : call of function without prototype
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 632 : suspicious pointer conversion
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 635 : call of function without prototype
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 641 : call of function without prototype
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 719 : call of function without prototype
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 727 : call of function without prototype
+>>>>>>> temp

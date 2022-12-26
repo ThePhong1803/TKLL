@@ -67,7 +67,7 @@ unsigned char timer_clock_config = 0;
 int status_worldTime = TOKYO;
 int last_statusWT = TOKYO;
 int UTC = 7;
-int zone = 7;
+static rom int zone = 7;
 int hour_change;
 int uartBuff = -1;
 int uartBuffDate = -1;
@@ -456,6 +456,16 @@ void run_timer_clock() {
                 if (hour_tc < 0)
                     hour_tc = 23;
             }
+            if (KEYUP_HOLD > DEBOUNCE_THRS) {
+                hour_tc += 3;
+                if (hour_tc > 23)
+                    hour_tc = 0;
+            }
+            if (KEYDOWN_HOLD > DEBOUNCE_THRS) {
+                hour_tc -= 3;
+                if (hour_tc < 0)
+                    hour_tc = 23;
+            }
             if (KEYOK > DEBOUNCE_THRS) {
                 timer_clock_config = 1;
             }
@@ -475,6 +485,17 @@ void run_timer_clock() {
                     minute_tc = 59;
                 }
             }
+            if (KEYUP_HOLD > DEBOUNCE_THRS) {
+                minute_tc += 9;
+                if (minute_tc > 59)
+                    minute_tc = 0;
+            }
+            if (KEYDOWN_HOLD > DEBOUNCE_THRS) {
+                minute_tc -= 9;
+                if (minute_tc < 0) {
+                    minute_tc = 59;
+                }
+            }
             if (KEYOK > DEBOUNCE_THRS) {
                 timer_clock_config = 2;
             }
@@ -490,6 +511,17 @@ void run_timer_clock() {
             }
             if (KEYDOWN > DEBOUNCE_THRS) {
                 second_tc -= 1;
+                if (second_tc < 0) {
+                    second_tc = 59;
+                }
+            }
+            if (KEYUP_HOLD > DEBOUNCE_THRS) {
+                second_tc += 9;
+                if (second_tc > 59)
+                    second_tc = 0;
+            }
+            if (KEYDOWN_HOLD > DEBOUNCE_THRS) {
+                second_tc -= 9;
                 if (second_tc < 0) {
                     second_tc = 59;
                 }
