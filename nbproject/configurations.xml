@@ -80,6 +80,7 @@
       </makeCustomizationType>
       <C18>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <property key="storage-class" value="sca"/>
         <property key="enable-opa" value="true"/>
         <property key="preprocessor-macros" value=""/>
@@ -100,6 +101,29 @@
         <property key="enable-op" value="true"/>
         <property key="enable-on" value="true"/>
         <property key="enable-om" value="true"/>
+=======
+        <property key="code-model" value="ms"/>
+        <property key="data-model" value="oa-"/>
+        <property key="default-char-unsigned" value="false"/>
+        <property key="enable-all-optimizations" value="true"/>
+        <property key="enable-int-promotion" value="false"/>
+        <property key="enable-multi-bank-stack-model" value="false"/>
+        <property key="enable-ob" value="true"/>
+        <property key="enable-od" value="true"/>
+        <property key="enable-om" value="true"/>
+        <property key="enable-on" value="true"/>
+        <property key="enable-op" value="true"/>
+        <property key="enable-opa" value="true"/>
+        <property key="enable-or" value="true"/>
+        <property key="enable-os" value="true"/>
+        <property key="enable-ot" value="true"/>
+        <property key="enable-ou" value="true"/>
+        <property key="enable-ow" value="true"/>
+        <property key="extra-include-directories"
+                  value="C:\Users\PC\Desktop\Digital Clock"/>
+        <property key="optimization-master" value="Enable all"/>
+        <property key="preprocessor-macros" value=""/>
+>>>>>>> 09240dbfd56674204e57c0ffe68daa05f934b6a5
 =======
         <property key="code-model" value="ms"/>
         <property key="data-model" value="oa-"/>

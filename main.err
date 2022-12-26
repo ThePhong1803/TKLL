@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 Warning[2058] D:\Subjects\DA TKLL document\Project\TKLL\main.c 71 : call of function without prototype
 Warning[2058] D:\Subjects\DA TKLL document\Project\TKLL\main.c 72 : call of function without prototype
 Warning[2054] D:\Subjects\DA TKLL document\Project\TKLL\main.c 75 : suspicious pointer conversion
@@ -76,6 +77,8 @@ Warning[2058] D:\Subjects\DA TKLL document\Project\TKLL\main.c 641 : call of fun
 Warning[2058] D:\Subjects\DA TKLL document\Project\TKLL\main.c 719 : call of function without prototype
 Warning[2058] D:\Subjects\DA TKLL document\Project\TKLL\main.c 727 : call of function without prototype
 =======
+=======
+>>>>>>> 09240dbfd56674204e57c0ffe68daa05f934b6a5
 Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 71 : call of function without prototype
 Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 72 : call of function without prototype
 Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 75 : suspicious pointer conversion
@@ -152,4 +155,7 @@ Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 595 : call of function wi
 Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 601 : call of function without prototype
 Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 679 : call of function without prototype
 Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 687 : call of function without prototype
+<<<<<<< HEAD
+>>>>>>> 09240dbfd56674204e57c0ffe68daa05f934b6a5
+=======
 >>>>>>> 09240dbfd56674204e57c0ffe68daa05f934b6a5
