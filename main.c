@@ -1,6 +1,7 @@
 #include "main.h"
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 // Noi khai bao hang so
 #define     LED     PORTD
 #define     ON      1
