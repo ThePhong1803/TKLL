@@ -5,7 +5,6 @@ build/default/production/menu/menu.o : \
 	D:/Subjects/DA\ TKLL\ document/TKLL/lcd/lcd.h \
 	D:/Subjects/DA\ TKLL\ document/TKLL/uart/uart.h \
 	D:/Subjects/DA\ TKLL\ document/TKLL/i2c/i2c.h \
-	C:/Program\ Files\ (x86)/Microchip/mplabc18/v3.47/h/math.h \
 	D:/Subjects/DA\ TKLL\ document/TKLL/menu/menu.h \
 	C:/Program\ Files\ (x86)/Microchip/mplabc18/v3.47/h/p18f4620.h \
 	C:/Program\ Files\ (x86)/Microchip/mplabc18/v3.47/h/stdarg.h \

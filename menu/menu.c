@@ -4,7 +4,6 @@
 #include "..\lcd\lcd.h"
 #include "..\uart\uart.h"
 #include "..\i2c\i2c.h"
-#include "math.h"
 
 int status = TIME_SCREEN;
 int last_state = NULL;
@@ -84,12 +83,14 @@ int last_state = NULL;
 #define VALUE4     61
 #define VALUE5     62
 
+#define BEGINNING_YEAR 2021
+
 int modify = 0;
 unsigned char timeBlink_1 = 0;
 int last_modify = 0;
 unsigned char timer_clock_config = 0;
 unsigned char statusSetUpTime = INIT_SYSTEM;
-
+unsigned char LunarDay, LunarMonth,  LunarYear;
 int status_worldTime = TOKYO;
 int last_statusWT = TOKYO;
 int UTC = 7;
@@ -138,7 +139,9 @@ void display_stop_time();
 void reset_array_time();
 void display_value(unsigned char position, struct time_stop_watch value);
 int console_state = CONSOLE_WAIT;
-
+void printCan(int can);
+void printChi(int chi);
+unsigned char check_year(int year);
 void DisplayTimeForModify();
 void SetUpTime();
 
@@ -162,7 +165,24 @@ unsigned char check_day(unsigned char mode); //check if the date has been
 void display_timer_clock(); //display lcd for timer clock function
 void run_timer_clock(); //run timer clock function
 void fsm_uart_mode();
+unsigned int LUNAR_CALENDAR_LOOKUP_TABLE[] = {
+	// 2021
+	0x1B73, 0x0394, 0x1832, 0x1254, 0x1A74, 0x1095, 0x1AB6, 0x18D7, 0x12F9, 0x1919, 0x133B, 0x195B,
 
+	// 2022
+	0x1B7D, 0x0021, 0x1A3D, 0x1061, 0x1A81, 0x12A3, 0x1AC3, 0x18E4, 0x1306, 0x1926, 0x1348, 0x1968,
+
+	// 2023
+	0x1B8A, 0x002B, 0x1A4A, 0x104B, 0x186C, 0x128E, 0x1AAE, 0x18CF, 0x12F1, 0x1B11, 0x1132, 0x1B53,
+
+	// 2024
+	0x1974, 0x0B96, 0x1835, 0x1257, 0x1877, 0x1099, 0x1ABA, 0x18DB, 0x12FD, 0x1B1D, 0x1141, 0x1B61,
+
+	// 2025
+	0x1982, 0x0224, 0x1842, 0x1264, 0x1884, 0x10A6, 0x1AC7, 0x18C8, 0x12EA, 0x190A, 0x132C, 0x1B4C
+	};
+void Solar2Lunar(unsigned char SolarDay, unsigned char SolarMonth, unsigned int SolarYear,
+				 unsigned char *LunarDay, unsigned char *LunarMonth, unsigned int *LunarYear);
 
 void menuControl() {
     switch (status) {
@@ -212,6 +232,9 @@ void menuControl() {
             }
             if (KEYOK > DEBOUNCE_THRS) {
                 status = DISPLAY_LUNAR;
+                Solar2Lunar(Read_DS1307(ADDRESS_DATE),Read_DS1307(ADDRESS_MONTH),
+                            Read_DS1307(ADDRESS_YEAR) + 2000, &LunarDay, &LunarMonth,
+                            &LunarYear);
             }
             if (KEYUP > DEBOUNCE_THRS) {
                 last_state = status;
@@ -222,7 +245,13 @@ void menuControl() {
             if(KEYOK){
                 status = LUNAR_CALENDAR;
             }
-            
+            printCan((LunarYear + 2000) % 10);
+            printChi((LunarYear + 2000) % 12);
+            LcdPrintStringS(0,1,"Nam ");
+            LcdPrintStringS(1,0,"Ngay ");
+            LcdPrintNumS(1,5,LunarDay);
+            LcdPrintStringS(1,8,"Thang ");
+            LcdPrintNumS(1,14,LunarMonth);
             break;
 
         case STOPWATCH:
@@ -1134,11 +1163,11 @@ void command_parse() {
                     UartSendString("\r\nDay must be in range [1,31] !\r\n");
                     UartSendString("Please enter again!\r\n");
                     cmd_date = CMD_INIT;
-                } else if (check_month(month_t) == 2 && year_t % 4 == 0 && date_t > 29) {
+                } else if (check_month(month_t) == 2 && check_year(year_t) && date_t > 29) {
                     UartSendString("\r\nDay must be in range [1,29] !\r\n");
                     UartSendString("Please enter again!\r\n");
                     cmd_date = CMD_INIT;
-                } else if (check_month(month_t) == 2 && year_t % 4 != 0 && date_t > 28) {
+                } else if (check_month(month_t) == 2 && !check_year(year_t) && date_t > 28) {
                     UartSendString("\r\nDay must be in range [1,28] !\r\n");
                     UartSendString("Please enter again!\r\n");
                     cmd_date = CMD_INIT;
@@ -1622,7 +1651,12 @@ int check_month(int month) {
         return 0; //month has 31 days
     return 1; //month has 30 days
 }
-
+unsigned char check_year(int year){
+    if((year % 4 == 0 && year % 100 != 0) || year % 400 == 0){
+        return 1;
+    }
+    return 0;
+}
 //increase the date if time zone change causes
 
 unsigned char check_day(unsigned char mode) {
@@ -1692,7 +1726,7 @@ unsigned char check_day(unsigned char mode) {
     Write_DS1307(ADDRESS_YEAR, tmp_year);
 }
 
-void DisplayTimeForModify(){
+void DisplayTimeForModify() {
     //////day_mf
     switch (day_mf) {
         case 1:
@@ -1740,8 +1774,7 @@ void DisplayTimeForModify(){
 
     if (returnOK == 1) {
         LcdPrintStringS(0, 13, "OK ");
-    }
-    else if (returnOK == 2){
+    } else if (returnOK == 2) {
         LcdPrintStringS(0, 12, "EXIT");
     }
 
@@ -1792,11 +1825,10 @@ void DisplayTimeForModify(){
         LcdPrintNumS(1, 6, date_mf);
     LcdPrintStringS(1, 8, " ");
     LcdPrintNumS(1, 9, 20);
-    if(year_mf < 10){
+    if (year_mf < 10) {
         LcdPrintNumS(1, 11, 0);
         LcdPrintNumS(1, 12, year_mf);
-    }
-    else LcdPrintNumS(1, 11, year_mf);
+    } else LcdPrintNumS(1, 11, year_mf);
 }
 
 void SetUpTime() {
@@ -1812,23 +1844,23 @@ void SetUpTime() {
                 LcdPrintStringS(0, 4, "  ");
             if (KEYUP) {
                 hour_mf = (hour_mf + 1) % 24;
-//                Write_DS1307(ADDRESS_HOUR, hour);
+                //                Write_DS1307(ADDRESS_HOUR, hour);
             }
             if (KEYDOWN) {
                 hour_mf = (hour_mf - 1);
                 if (hour_mf > 23)
                     hour_mf = 23;
-//                Write_DS1307(ADDRESS_HOUR, hour);
+                //                Write_DS1307(ADDRESS_HOUR, hour);
             }
             if (KEYUP_HOLD) {
                 hour_mf = (hour_mf + 5) % 24;
-//                Write_DS1307(ADDRESS_HOUR, hour);
+                //                Write_DS1307(ADDRESS_HOUR, hour);
             }
             if (KEYDOWN_HOLD) {
                 hour_mf = (hour_mf - 5);
                 if (hour_mf > 23)
                     hour_mf = 23;
-//                Write_DS1307(ADDRESS_HOUR, hour);
+                //                Write_DS1307(ADDRESS_HOUR, hour);
             }
             if (KEYOK)
                 statusSetUpTime = SET_MINUTE;
@@ -1845,23 +1877,23 @@ void SetUpTime() {
                 LcdPrintStringS(0, 7, "  ");
             if (KEYUP) {
                 minute_mf = (minute_mf + 1) % 60;
-//                Write_DS1307(ADDRESS_MINUTE, minute);
+                //                Write_DS1307(ADDRESS_MINUTE, minute);
             }
             if (KEYDOWN) {
                 minute_mf = (minute_mf - 1);
                 if (minute_mf > 59)
                     minute_mf = 59;
-//                Write_DS1307(ADDRESS_MINUTE, minute);
+                //                Write_DS1307(ADDRESS_MINUTE, minute);
             }
             if (KEYUP_HOLD) {
                 minute_mf = (minute_mf + 20) % 60;
-//                Write_DS1307(ADDRESS_MINUTE, minute);
+                //                Write_DS1307(ADDRESS_MINUTE, minute);
             }
             if (KEYDOWN_HOLD) {
                 minute_mf = (minute_mf - 20);
                 if (minute_mf > 59)
                     minute_mf = 59;
-//                Write_DS1307(ADDRESS_MINUTE, minute);
+                //                Write_DS1307(ADDRESS_MINUTE, minute);
             }
             if (KEYOK)
                 statusSetUpTime = SET_DAY;
@@ -1880,13 +1912,13 @@ void SetUpTime() {
                 day_mf = day_mf + 1;
                 if (day_mf > 7)
                     day_mf = 1;
-//                Write_DS1307(ADDRESS_DAY, day);
+                //                Write_DS1307(ADDRESS_DAY, day);
             }
             if (KEYDOWN) {
                 day_mf = day_mf - 1;
                 if (day_mf > 7)
                     day_mf = 7;
-//                Write_DS1307(ADDRESS_DAY, day);
+                //                Write_DS1307(ADDRESS_DAY, day);
             }
             if (KEYOK)
                 statusSetUpTime = SET_DATE;
@@ -1905,25 +1937,25 @@ void SetUpTime() {
                 date_mf = date_mf + 1;
                 if (date_mf > 31)
                     date_mf = 1;
-//                Write_DS1307(ADDRESS_DATE, date);
+                //                Write_DS1307(ADDRESS_DATE, date);
             }
             if (KEYDOWN) {
                 date_mf = date_mf - 1;
                 if (date_mf < 1)
                     date_mf = 31;
-//                Write_DS1307(ADDRESS_DATE, date);
+                //                Write_DS1307(ADDRESS_DATE, date);
             }
             if (KEYUP_HOLD) {
                 date_mf = date_mf + 10;
                 if (date_mf > 31)
                     date_mf = 1;
-//                Write_DS1307(ADDRESS_DATE, date);
+                //                Write_DS1307(ADDRESS_DATE, date);
             }
             if (KEYDOWN_HOLD) {
                 date_mf = date_mf - 10;
                 if (date_mf < 1)
                     date_mf = 31;
-//                Write_DS1307(ADDRESS_DATE, date);
+                //                Write_DS1307(ADDRESS_DATE, date);
             }
             if (KEYOK)
                 statusSetUpTime = SET_MONTH;
@@ -1942,13 +1974,13 @@ void SetUpTime() {
                 month_mf = month_mf + 1;
                 if (month_mf > 12)
                     month_mf = 1;
-//                Write_DS1307(ADDRESS_MONTH, month);
+                //                Write_DS1307(ADDRESS_MONTH, month);
             }
             if (KEYDOWN) {
                 month_mf = month_mf - 1;
                 if (month_mf < 1)
                     month_mf = 12;
-//                Write_DS1307(ADDRESS_MONTH, month);
+                //                Write_DS1307(ADDRESS_MONTH, month);
             }
             if (KEYOK)
                 statusSetUpTime = SET_YEAR;
@@ -1967,13 +1999,13 @@ void SetUpTime() {
                 year_mf = year_mf + 1;
                 if (year_mf > 99)
                     year_mf = 0;
-//                Write_DS1307(ADDRESS_YEAR, year);
+                //                Write_DS1307(ADDRESS_YEAR, year);
             }
             if (KEYDOWN) {
                 year_mf = year_mf - 1;
                 if (year_mf < 99)
                     year_mf = 99;
-//                Write_DS1307(ADDRESS_YEAR, year);
+                //                Write_DS1307(ADDRESS_YEAR, year);
             }
             if (KEYOK) {
                 LcdClearS();
@@ -2006,18 +2038,17 @@ void SetUpTime() {
                 Write_DS1307(ADDRESS_MONTH, month_mf);
                 Write_DS1307(ADDRESS_YEAR, year_mf);
             }
-            if(KEYOK && returnOK == 2){
+            if (KEYOK && returnOK == 2) {
                 LcdClearS();
                 statusSetUpTime = INIT_SYSTEM;
                 bitEnable_1 = ENABLE;
                 setTimeFlag = 1;
                 returnOK = 0;
             }
-            if(KEYDOWN){
-                if(returnOK == 1){
+            if (KEYDOWN) {
+                if (returnOK == 1) {
                     returnOK = 2;
-                }
-                else if(returnOK == 2){
+                } else if (returnOK == 2) {
                     returnOK = 1;
                 }
             }
@@ -2030,5 +2061,140 @@ void SetUpTime() {
         default:
             break;
 
+    }
+}
+
+void Solar2Lunar(unsigned char SolarDay, unsigned char SolarMonth, unsigned int SolarYear,
+        unsigned char *LunarDay, unsigned char *LunarMonth, unsigned int *LunarYear) {
+    unsigned char N_AL_DT_DL;
+    unsigned char T_AL_DT_DL;
+    unsigned char SN_CT_AL;
+    unsigned char TN_B_THT;
+    unsigned char N_AL_DT_DL_TT;
+    unsigned char T_AL_DT_DL_TT;
+
+    union LUNAR_RECORD lr;
+
+    lr.Word = LUNAR_CALENDAR_LOOKUP_TABLE[(SolarYear - BEGINNING_YEAR) * 12 + SolarMonth - 1];
+    N_AL_DT_DL = lr.Info.N_AL_DT_DL;
+    T_AL_DT_DL = lr.Info.T_AL_DT_DL;
+    SN_CT_AL = lr.Info.SN_CT_AL + 29;
+    TN_B_THT = lr.Info.TN_B_THT;
+
+    lr.Word = LUNAR_CALENDAR_LOOKUP_TABLE[(SolarYear - BEGINNING_YEAR) * 12 + SolarMonth];
+    N_AL_DT_DL_TT = lr.Info.N_AL_DT_DL;
+    T_AL_DT_DL_TT = lr.Info.T_AL_DT_DL;
+
+    // Tinh ngay & thang
+    if (N_AL_DT_DL == SN_CT_AL && N_AL_DT_DL_TT == 2) {
+        if (SolarDay == 1) {
+            (*LunarDay) = N_AL_DT_DL;
+            (*LunarMonth) = T_AL_DT_DL;
+        } else if (SolarDay == 31) {
+            (*LunarDay) = 1;
+            (*LunarMonth) = T_AL_DT_DL_TT;
+        } else {
+            (*LunarDay) = SolarDay - 1;
+            if (TN_B_THT) {
+                (*LunarMonth) = T_AL_DT_DL;
+            } else {
+                (*LunarMonth) = T_AL_DT_DL == 12 ? 1 : (T_AL_DT_DL + 1);
+            }
+        }
+    } else {
+        (*LunarDay) = SolarDay + N_AL_DT_DL - 1;
+        if ((*LunarDay) <= SN_CT_AL) {
+            (*LunarMonth) = T_AL_DT_DL;
+        } else {
+            (*LunarDay) -= SN_CT_AL;
+
+            (*LunarMonth) = T_AL_DT_DL + 1 - TN_B_THT;
+            if ((*LunarMonth) == 13)
+                (*LunarMonth) = 1;
+        }
+    }
+
+    // Tinh Nam
+    if (SolarMonth >= (*LunarMonth)) {
+        (*LunarYear) = SolarYear;
+    } else {
+        (*LunarYear) = SolarYear - 1;
+    }
+    *LunarYear -= 2000;
+}
+
+void printCan(int can) {
+    switch (can) {
+        case 4:
+            LcdPrintStringS(0, 5, "Giap ");
+            break;
+        case 5:
+            LcdPrintStringS(0, 5, "At ");
+            break;
+        case 6:
+            LcdPrintStringS(0, 5, "Binh ");
+            break;
+        case 7:
+            LcdPrintStringS(0, 5, "Dinh ");
+            break;
+        case 8:
+            LcdPrintStringS(0, 5, "Mau ");
+            break;
+        case 9:
+            LcdPrintStringS(0, 5, "Ky ");
+            break;
+        case 0:
+            LcdPrintStringS(0, 5, "Canh ");
+            break;
+        case 1:
+            LcdPrintStringS(0, 5, "Tan ");
+            break;
+        case 2:
+            LcdPrintStringS(0, 5, "Nham ");
+            break;
+        case 3:
+            LcdPrintStringS(0, 5, "Quy ");
+            break;
+    }
+}
+
+void printChi(int chi) {
+    switch (chi) {
+        case 4:
+            LcdPrintStringS(0, 10, "Ti");
+            break;
+        case 5:
+            LcdPrintStringS(0, 10, "Suu");
+            break;
+        case 6:
+            LcdPrintStringS(0, 10, "Dan");
+            break;
+        case 7:
+            LcdPrintStringS(0, 10, "Meo");
+            break;
+        case 8:
+            LcdPrintStringS(0, 10, "Thin");
+            break;
+        case 9:
+            LcdPrintStringS(0, 10, "Ty");
+            break;
+        case 10:
+            LcdPrintStringS(0, 10, "Ngo");
+            break;
+        case 11:
+            LcdPrintStringS(0, 10, "Mui");
+            break;
+        case 0:
+            LcdPrintStringS(0, 10, "Than");
+            break;
+        case 1:
+            LcdPrintStringS(0, 10, "Dau");
+            break;
+        case 2:
+            LcdPrintStringS(0, 10, "Tuat");
+            break;
+        case 3:
+            LcdPrintStringS(0, 10, "Hoi");
+            break;
     }
 }
