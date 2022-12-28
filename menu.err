@@ -1,186 +1,185 @@
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 195 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 196 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 204 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 205 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 218 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 219 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 192 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 193 : call of function without prototype
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 201 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 202 : suspicious pointer conversion
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 215 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 216 : call of function without prototype
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 224 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 225 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 227 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 228 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 230 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 231 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 241 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 238 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 251 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 252 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 254 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 255 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 257 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 263 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 264 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 266 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 267 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 279 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 285 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 286 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 326 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 331 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 332 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 269 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 270 : suspicious pointer conversion
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 282 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 288 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 289 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 329 : call of function without prototype
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 334 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 335 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 351 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 352 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 356 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 357 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 337 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 338 : suspicious pointer conversion
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 354 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 355 : call of function without prototype
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 359 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 360 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 377 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 380 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 381 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 394 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 395 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 362 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 363 : suspicious pointer conversion
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 380 : call of function without prototype
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 383 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 384 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 397 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 398 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 410 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 414 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 418 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 419 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 400 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 401 : suspicious pointer conversion
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 413 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 417 : call of function without prototype
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 421 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 422 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 439 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 449 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 450 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 469 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 470 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 521 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 522 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 523 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 424 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 425 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 442 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 452 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 453 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 472 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 473 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 524 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 525 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 526 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 546 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 547 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 552 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 553 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 557 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 558 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 559 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 527 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 528 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 529 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 549 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 550 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 555 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 556 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 560 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 578 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 579 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 584 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 585 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 589 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 590 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 591 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 561 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 562 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 563 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 581 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 582 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 587 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 588 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 592 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 610 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 611 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 616 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 617 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 621 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 622 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 623 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 593 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 594 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 595 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 613 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 614 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 619 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 620 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 624 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 641 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 642 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 625 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 626 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 627 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 644 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 645 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 646 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 647 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 648 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 691 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 692 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 649 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 650 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 651 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 694 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 698 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 700 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 704 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 706 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 713 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 714 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 695 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 697 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 701 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 703 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 707 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 709 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 716 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 717 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 719 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 723 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 725 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 729 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 731 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 742 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 770 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 800 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 862 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 872 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 904 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 954 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 964 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 982 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 992 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1010 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1020 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1097 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1107 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1118 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1128 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1146 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1156 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1188 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1257 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1267 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1277 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1287 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1314 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1315 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1331 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1332 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 720 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 722 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 726 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 728 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 732 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 734 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 745 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 773 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 803 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 865 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 875 : suspicious pointer conversion
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 907 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 957 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 967 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 985 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 995 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1013 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1023 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1100 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1110 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1121 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1131 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1149 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1159 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1191 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1260 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1270 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1280 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1290 : call of function without prototype
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1317 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1318 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1334 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1335 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1356 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1357 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1365 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1368 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1369 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1389 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1390 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1416 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1417 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1337 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1338 : suspicious pointer conversion
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1359 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1360 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1368 : call of function without prototype
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1371 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1372 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1392 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1393 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1419 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1420 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1442 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1443 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1464 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1465 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1477 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1478 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1422 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1423 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1445 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1446 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1467 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1468 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1480 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1481 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1495 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1496 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1483 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1484 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1498 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1499 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1513 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1514 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1501 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1502 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1516 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1517 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1531 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1532 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1519 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1520 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1534 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1535 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1549 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1550 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1537 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1538 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1552 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1553 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1566 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1567 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1737 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1555 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1556 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1569 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1570 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1740 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1743 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1746 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1749 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1752 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1755 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1759 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1764 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1766 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1771 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1773 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1780 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1782 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1787 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1758 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1762 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1767 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1769 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1774 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1776 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1783 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1785 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1790 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1793 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1796 : suspicious pointer conversion
@@ -192,47 +191,48 @@ Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1811 : suspicious po
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1814 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1817 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1820 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1824 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1826 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1830 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1848 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1872 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1881 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1905 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1914 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1938 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1947 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1963 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1972 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2000 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2009 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2025 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2034 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2058 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2063 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2073 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2076 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2090 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2105 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2177 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2180 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2183 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2186 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2189 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2192 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2195 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2198 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2201 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2204 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1823 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1827 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1829 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1833 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1851 : suspicious pointer conversion
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1875 : call of function without prototype
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1884 : suspicious pointer conversion
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1908 : call of function without prototype
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1917 : suspicious pointer conversion
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1937 : call of function without prototype
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1946 : suspicious pointer conversion
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1962 : call of function without prototype
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1971 : suspicious pointer conversion
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 1999 : call of function without prototype
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2008 : suspicious pointer conversion
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2036 : call of function without prototype
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2045 : suspicious pointer conversion
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2069 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2074 : call of function without prototype
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2084 : suspicious pointer conversion
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2087 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2101 : call of function without prototype
+Warning[2058] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2116 : call of function without prototype
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2188 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2191 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2194 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2197 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2200 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2203 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2206 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2209 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2212 : suspicious pointer conversion
 Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2215 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2218 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2221 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2224 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2227 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2230 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2233 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2236 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2239 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2242 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2245 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2223 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2226 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2229 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2232 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2235 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2238 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2241 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2244 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2247 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2250 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2253 : suspicious pointer conversion
+Warning[2054] D:\Subjects\DA TKLL document\TKLL\menu\menu.c 2256 : suspicious pointer conversion
