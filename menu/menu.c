@@ -30,10 +30,11 @@ int last_state = NULL;
 
 #define     SET_HOUR            6
 #define     SET_MINUTE          7
-#define     SET_DAY             8
-#define     SET_DATE            9
-#define     SET_MONTH           10
-#define     SET_YEAR            11
+#define     SET_SECOND          8
+#define     SET_DAY             9
+#define     SET_DATE            10
+#define     SET_MONTH           11
+#define     SET_YEAR            12
 #define     ENABLE              1
 #define     DISABLE             0
 
@@ -83,7 +84,7 @@ int last_state = NULL;
 #define VALUE4     61
 #define VALUE5     62
 
-#define BEGINNING_YEAR 2021
+#define BEGINNING_YEAR 2020
 
 int modify = 0;
 unsigned char timeBlink_1 = 0;
@@ -166,21 +167,24 @@ void display_timer_clock(); //display lcd for timer clock function
 void run_timer_clock(); //run timer clock function
 void fsm_uart_mode();
 unsigned int LUNAR_CALENDAR_LOOKUP_TABLE[] = {
-	// 2021
-	0x1B73, 0x0394, 0x1832, 0x1254, 0x1A74, 0x1095, 0x1AB6, 0x18D7, 0x12F9, 0x1919, 0x133B, 0x195B,
+	//2020
+	0x1B87,0x0828,0x1A48,0x1269,0x1A89,0x108A,0x1AAB,0x18CC,0x10EE,0x1B0F,0x1130,0x1951,
 
-	// 2022
-	0x1B7D, 0x0021, 0x1A3D, 0x1061, 0x1A81, 0x12A3, 0x1AC3, 0x18E4, 0x1306, 0x1926, 0x1348, 0x1968,
+	//2021
+	0x1B73,0x0394,0x1832,0x1254,0x1A74,0x1095,0x1AB6,0x18D7,0x12F9,0x1919,0x133B,0x195B,
 
-	// 2023
-	0x1B8A, 0x002B, 0x1A4A, 0x104B, 0x186C, 0x128E, 0x1AAE, 0x18CF, 0x12F1, 0x1B11, 0x1132, 0x1B53,
+	//2022
+	0x1B7D,0x0021,0x1A3D,0x1061,0x1A81,0x12A3,0x1AC3,0x18E4,0x1306,0x1926,0x1348,0x1968,
 
-	// 2024
-	0x1974, 0x0B96, 0x1835, 0x1257, 0x1877, 0x1099, 0x1ABA, 0x18DB, 0x12FD, 0x1B1D, 0x1141, 0x1B61,
+	//2023
+	0x1B8A,0x002B,0x1A4A,0x104B,0x186C,0x128E,0x1AAE,0x18CF,0x12F1,0x1B11,0x1132,0x1B53,
 
-	// 2025
-	0x1982, 0x0224, 0x1842, 0x1264, 0x1884, 0x10A6, 0x1AC7, 0x18C8, 0x12EA, 0x190A, 0x132C, 0x1B4C
-	};
+	//2024
+	0x1974,0x0B96,0x1835,0x1257,0x1877,0x1099,0x1ABA,0x18DB,0x12FD,0x1B1D,0x1141,0x1B61,
+
+	//2025
+	0x1982,0x0224,0x1842,0x1264,0x1884,0x10A6,0x1AC7,0x18C8,0x12EA,0x190A,0x132C,0x1B4C
+};
 void Solar2Lunar(unsigned char SolarDay, unsigned char SolarMonth, unsigned int SolarYear,
 				 unsigned char *LunarDay, unsigned char *LunarMonth, unsigned int *LunarYear);
 
@@ -1896,6 +1900,39 @@ void SetUpTime() {
                 //                Write_DS1307(ADDRESS_MINUTE, minute);
             }
             if (KEYOK)
+                statusSetUpTime = SET_SECOND;
+            if (KEYOK_HOLD) {
+                LcdClearS();
+                bitEnable_1 = ENABLE;
+                statusSetUpTime = BACK_MENU;
+            }
+            break;
+        case SET_SECOND:
+            bitEnable_1 = DISABLE;
+            timeBlink_1 = (timeBlink_1 + 1) % 20;
+            if (timeBlink_1 > 15)
+                LcdPrintStringS(0, 10, "  ");
+            if (KEYUP) {
+                second_mf = (second_mf + 1) % 60;
+                //                Write_DS1307(ADDRESS_MINUTE, minute);
+            }
+            if (KEYDOWN) {
+                second_mf = (second_mf - 1);
+                if (second_mf > 59)
+                    second_mf = 59;
+                //                Write_DS1307(ADDRESS_MINUTE, minute);
+            }
+            if (KEYUP_HOLD) {
+                second_mf = (second_mf + 20) % 60;
+                //                Write_DS1307(ADDRESS_MINUTE, minute);
+            }
+            if (KEYDOWN_HOLD) {
+                second_mf = (second_mf - 20);
+                if (second_mf > 59)
+                    second_mf = 59;
+                //                Write_DS1307(ADDRESS_MINUTE, minute);
+            }
+            if (KEYOK)
                 statusSetUpTime = SET_DAY;
             if (KEYOK_HOLD) {
                 LcdClearS();
@@ -2007,6 +2044,16 @@ void SetUpTime() {
                     year_mf = 99;
                 //                Write_DS1307(ADDRESS_YEAR, year);
             }
+            if (KEYDOWN_HOLD) {
+                year_mf = year_mf - 5;
+                if (year_mf < 99)
+                    year_mf = 99;
+            }
+            if (KEYUP_HOLD) {
+                year_mf = year_mf + 5;
+                if (year_mf > 99)
+                    year_mf = 0;
+            }
             if (KEYOK) {
                 LcdClearS();
                 bitEnable_1 = ENABLE;
@@ -2031,6 +2078,7 @@ void SetUpTime() {
                 bitEnable_1 = ENABLE;
                 setTimeFlag = 1;
                 returnOK = 0;
+                Write_DS1307(ADDRESS_SECOND, second_mf);
                 Write_DS1307(ADDRESS_HOUR, hour_mf);
                 Write_DS1307(ADDRESS_MINUTE, minute_mf);
                 Write_DS1307(ADDRESS_DAY, day_mf);
