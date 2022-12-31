@@ -5,9 +5,7 @@
 #include "..\uart\uart.h"
 #include "..\i2c\i2c.h"
 
-int status = TIME_SCREEN;
-int last_state = NULL;
-
+#define BEGIN_YEAR 21
 #define DEBOUNCE_THRS 0
 
 
@@ -27,6 +25,7 @@ int last_state = NULL;
 #define     COMPARE             4
 #define     ALARM               5
 #define     BACK_MENU           -1
+#define     CONFIRM             123
 
 #define     SET_HOUR            6
 #define     SET_MINUTE          7
@@ -84,18 +83,70 @@ int last_state = NULL;
 #define VALUE4     61
 #define VALUE5     62
 
-#define BEGINNING_YEAR 2021
+#pragma idata CONG
+unsigned char ALdauthangDL[5][12] = {
+    {19, 20, 18, 20, 20, 21, 22, 23, 25, 25, 27, 27}, // 2021
+    {29, 1, 29, 1, 1, 3, 3, 4, 6, 6, 8, 8},           // 2022
+    {10, 11, 20, 11, 12, 14, 14, 15, 17, 17, 18, 19}, // 2023
+    {20, 22, 21, 23, 23, 25, 26, 27, 29, 29, 1, 1},   // 2024
+    {2, 4, 2, 4, 4, 6, 7, 8, 10, 10, 12, 12}         // 2025
+};
+unsigned char thangALdauthangDL[5][12] = {
+    {11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10},  // 2021
+    {11, 1, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11},  // 2022
+    {12, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10},   // 2023
+    {11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11}, // 2024
+    {12, 1, 2, 3, 4, 5, 6, 6, 7, 8, 9, 10}   // 2025
+};
+
+unsigned char DLdauthangAL[5][12] = {
+    {13, 12, 13, 12, 12, 10, 10, 8, 7, 6, 5, 4},      // 2021
+    {3, 29, 3, 31, 30, 29, 29, 27, 26, 25, 24, 23},   // 2022
+    {22, 20, 22, 20, 19, 18, 18, 16, 15, 15, 13, 13}, // 2023
+    {11, 10, 10, 9, 8, 6, 6, 4, 3, 3, 31, 31},        // 2024
+    {29, 28, 29, 28, 27, 25, 25, 23, 22, 21, 20, 20} // 2025
+};
+
+unsigned char thangALdauthangAL[5][12] = {
+    {12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},  // 2021
+    {12, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12}, // 2022
+    {1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},   // 2023
+    {12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12},  // 2024
+    {1, 2, 3, 4, 5, 6, 6, 7, 8, 9, 10, 11}   // 2025
+};
+#pragma idata
+struct time_stop_watch {
+    unsigned char hour, minute, second;
+};
+
+struct time_stop_watch arr_time[6];
+
+unsigned char LunarDay;
+unsigned char LunarMonth;
+unsigned char LunarYear;
+unsigned char date_lunar ;
+unsigned char month_lunar;
+unsigned char year_lunar;
+
+int status = TIME_SCREEN;
+int last_state = NULL;
 
 int modify = 0;
 unsigned char timeBlink_1 = 0;
 int last_modify = 0;
 unsigned char timer_clock_config = 0;
 unsigned char statusSetUpTime = INIT_SYSTEM;
-unsigned char LunarDay, LunarMonth,  LunarYear;
+unsigned char LunarDay;
+unsigned char LunarMonth;
+unsigned char LunarYear;
+unsigned char date_lunar ;
+unsigned char month_lunar;
+unsigned char year_lunar;
 int status_worldTime = TOKYO;
 int last_statusWT = TOKYO;
 int UTC = 7;
-static rom int zone = 7;
+//static rom
+unsigned char zone = 7;
 int hour_change;
 int uartBuff = -1;
 int uartBuffDate = -1;
@@ -126,14 +177,11 @@ int cmd_state = CMD_INIT;
 int cmd_date = CMD_INIT; //cong
 unsigned char hour_t, minute_t, second_t,
         temp1, temp2, returnFlag = 0, setTimeFlag = 0;
+unsigned char confirm_flag = 0;
 int year_t, month_t, date_t, day_t;
 unsigned char run_stopwatch_flag = 0,
         hour_st = 0, minute_st = 0, second_st = 0;
 
-struct time_stop_watch {
-    unsigned char hour, minute, second;
-};
-struct time_stop_watch arr_time[6];
 unsigned char index_arr = 0; //index for arr_time with max value is 5
 unsigned char status_stop_time, status_last_stop_time = VALUE0;
 void display_stop_time();
@@ -153,6 +201,8 @@ void display_stopwatch();
 void run_stopwatch();
 
 // here cong
+void lunar_calculate(unsigned char x, unsigned char y, unsigned char t);
+
 void fsm_worldTime(); //fsm for world time function
 void check_UTC(); //check current time zone
 void change_UTC(int value); //change current time zone
@@ -166,24 +216,6 @@ unsigned char check_day(unsigned char mode); //check if the date has been
 void display_timer_clock(); //display lcd for timer clock function
 void run_timer_clock(); //run timer clock function
 void fsm_uart_mode();
-unsigned int LUNAR_CALENDAR_LOOKUP_TABLE[] = {
-	// 2021
-	0x1B73, 0x0394, 0x1832, 0x1254, 0x1A74, 0x1095, 0x1AB6, 0x18D7, 0x12F9, 0x1919, 0x133B, 0x195B,
-
-	// 2022
-	0x1B7D, 0x0021, 0x1A3D, 0x1061, 0x1A81, 0x12A3, 0x1AC3, 0x18E4, 0x1306, 0x1926, 0x1348, 0x1968,
-
-	// 2023
-	0x1B8A, 0x002B, 0x1A4A, 0x104B, 0x186C, 0x128E, 0x1AAE, 0x18CF, 0x12F1, 0x1B11, 0x1132, 0x1B53,
-
-	// 2024
-	0x1974, 0x0B96, 0x1835, 0x1257, 0x1877, 0x1099, 0x1ABA, 0x18DB, 0x12FD, 0x1B1D, 0x1141, 0x1B61,
-
-	// 2025
-	0x1982, 0x0224, 0x1842, 0x1264, 0x1884, 0x10A6, 0x1AC7, 0x18C8, 0x12EA, 0x190A, 0x132C, 0x1B4C
-	};
-void Solar2Lunar(unsigned char SolarDay, unsigned char SolarMonth, unsigned int SolarYear,
-				 unsigned char *LunarDay, unsigned char *LunarMonth, unsigned int *LunarYear);
 
 void menuControl() {
     switch (status) {
@@ -232,10 +264,11 @@ void menuControl() {
                 status = STOPWATCH;
             }
             if (KEYOK > DEBOUNCE_THRS) {
+                date_lunar = Read_DS1307(ADDRESS_DATE);
+                month_lunar = Read_DS1307(ADDRESS_MONTH);
+                year_lunar = Read_DS1307(ADDRESS_YEAR);
+                lunar_calculate(date_lunar, month_lunar, year_lunar);
                 status = DISPLAY_LUNAR;
-                Solar2Lunar(Read_DS1307(ADDRESS_DATE),Read_DS1307(ADDRESS_MONTH),
-                            Read_DS1307(ADDRESS_YEAR) + 2000, &LunarDay, &LunarMonth,
-                            &LunarYear);
             }
             if (KEYUP > DEBOUNCE_THRS) {
                 last_state = status;
@@ -253,12 +286,14 @@ void menuControl() {
             LcdPrintNumS(1,5,LunarDay);
             LcdPrintStringS(1,8,"Thang ");
             LcdPrintNumS(1,14,LunarMonth);
-//            LcdPrintNumS(0,0,LunarMonth);
-//            LcdPrintNumS(0,3,LunarDay);
-//            LcdPrintNumS(0,6,LunarYear);
-//            LcdPrintNumS(1,0,Read_DS1307(ADDRESS_MONTH));
-//            LcdPrintNumS(1,3,Read_DS1307(ADDRESS_DATE));
-//            LcdPrintNumS(1,6,Read_DS1307(ADDRESS_YEAR));
+//            LcdPrintNumS(0,0,date_lunar);
+//            LcdPrintNumS(0,3,month_lunar);
+//            LcdPrintNumS(0,6,year_lunar);
+//            LcdPrintNumS(1,0,LunarDay);
+//            LcdPrintNumS(1,3,LunarMonth);
+//            LcdPrintNumS(1,6,LunarYear);
+//            LcdPrintNumS(1,9,arr_time[0].minute);
+//            LcdPrintNumS(1,6,arr_time[0].hour);
             break;
 
         case STOPWATCH:
@@ -287,7 +322,7 @@ void menuControl() {
         case RUN_STOPWATCH:
             display_stopwatch();
             if (run_stopwatch_flag) run_stopwatch();
-            if(KEYUP_HOLD){
+            if(KEYUP_HOLD_NONRESET){
                 run_stopwatch_flag = 0;
                 hour_st = 0;
                 minute_st = 0;
@@ -309,7 +344,7 @@ void menuControl() {
                     index_arr++;
                 }
             }
-            if (KEYDOWN_HOLD) {
+            if (KEYDOWN_HOLD_NONRESET) {
                 status = DISPLAY_STOP_TIME;
                 run_stopwatch_flag = 0;
                 status_stop_time = VALUE1;
@@ -1735,107 +1770,111 @@ unsigned char check_day(unsigned char mode) {
 
 void DisplayTimeForModify() {
     //////day_mf
-    switch (day_mf) {
-        case 1:
-            LcdPrintStringS(0, 0, "SUN");
-            break;
-        case 2:
-            LcdPrintStringS(0, 0, "MON");
-            break;
-        case 3:
-            LcdPrintStringS(0, 0, "TUE");
-            break;
-        case 4:
-            LcdPrintStringS(0, 0, "WED");
-            break;
-        case 5:
-            LcdPrintStringS(0, 0, "THU");
-            break;
-        case 6:
-            LcdPrintStringS(0, 0, "FRI");
-            break;
-        case 7:
-            LcdPrintStringS(0, 0, "SAT");
-            break;
+    if (!confirm_flag) {
+        switch (day_mf) {
+            case 1:
+                LcdPrintStringS(0, 0, "SUN");
+                break;
+            case 2:
+                LcdPrintStringS(0, 0, "MON");
+                break;
+            case 3:
+                LcdPrintStringS(0, 0, "TUE");
+                break;
+            case 4:
+                LcdPrintStringS(0, 0, "WED");
+                break;
+            case 5:
+                LcdPrintStringS(0, 0, "THU");
+                break;
+            case 6:
+                LcdPrintStringS(0, 0, "FRI");
+                break;
+            case 7:
+                LcdPrintStringS(0, 0, "SAT");
+                break;
+        }
+        if (hour_mf < 10) {
+            LcdPrintStringS(0, 4, "0");
+            LcdPrintNumS(0, 5, hour_mf);
+        } else
+            LcdPrintNumS(0, 4, hour_mf);
+
+        LcdPrintStringS(0, 6, ":");
+        if (minute_mf < 10) {
+            LcdPrintStringS(0, 7, "0");
+            LcdPrintNumS(0, 8, minute_mf);
+        } else
+            LcdPrintNumS(0, 7, minute_mf);
+
+        LcdPrintStringS(0, 9, ":");
+        if (second_mf < 10) {
+            LcdPrintStringS(0, 10, "0");
+            LcdPrintNumS(0, 11, second_mf);
+        } else
+            LcdPrintNumS(0, 10, second_mf);
+
+
+        if (returnOK == 1) {
+            LcdPrintStringS(0, 13, "OK ");
+        }
+
+        switch (month_mf) {
+            case 1:
+                LcdPrintStringS(1, 2, "JAN");
+                break;
+            case 2:
+                LcdPrintStringS(1, 2, "FEB");
+                break;
+            case 3:
+                LcdPrintStringS(1, 2, "MAR");
+                break;
+            case 4:
+                LcdPrintStringS(1, 2, "APR");
+                break;
+            case 5:
+                LcdPrintStringS(1, 2, "MAY");
+                break;
+            case 6:
+                LcdPrintStringS(1, 2, "JUN");
+                break;
+            case 7:
+                LcdPrintStringS(1, 2, "JUL");
+                break;
+            case 8:
+                LcdPrintStringS(1, 2, "AUG");
+                break;
+            case 9:
+                LcdPrintStringS(1, 2, "SEP");
+                break;
+            case 10:
+                LcdPrintStringS(1, 2, "OCT");
+                break;
+            case 11:
+                LcdPrintStringS(1, 2, "NOV");
+                break;
+            case 12:
+                LcdPrintStringS(1, 2, "DEC");
+                break;
+        }
+
+        LcdPrintStringS(1, 5, " ");
+        if (date_mf < 10) {
+            LcdPrintStringS(1, 6, " ");
+            LcdPrintNumS(1, 7, date_mf);
+        } else
+            LcdPrintNumS(1, 6, date_mf);
+        LcdPrintStringS(1, 8, " ");
+        LcdPrintNumS(1, 9, 20);
+        if (year_mf < 10) {
+            LcdPrintNumS(1, 11, 0);
+            LcdPrintNumS(1, 12, year_mf);
+        } else LcdPrintNumS(1, 11, year_mf);
     }
-    if (hour_mf < 10) {
-        LcdPrintStringS(0, 4, "0");
-        LcdPrintNumS(0, 5, hour_mf);
-    } else
-        LcdPrintNumS(0, 4, hour_mf);
-
-    LcdPrintStringS(0, 6, ":");
-    if (minute_mf < 10) {
-        LcdPrintStringS(0, 7, "0");
-        LcdPrintNumS(0, 8, minute_mf);
-    } else
-        LcdPrintNumS(0, 7, minute_mf);
-
-    LcdPrintStringS(0, 9, ":");
-    if (second_mf < 10) {
-        LcdPrintStringS(0, 10, "0");
-        LcdPrintNumS(0, 11, second_mf);
-    } else
-        LcdPrintNumS(0, 10, second_mf);
-
-
-    if (returnOK == 1) {
-        LcdPrintStringS(0, 13, "OK ");
-    } else if (returnOK == 2) {
-        LcdPrintStringS(0, 12, "EXIT");
+    else {
+        LcdPrintStringS(0,0,"Save time ?     ");
+        LcdPrintStringS(1,0,"YES(UP) NO(DOWN)");
     }
-
-    switch (month_mf) {
-        case 1:
-            LcdPrintStringS(1, 2, "JAN");
-            break;
-        case 2:
-            LcdPrintStringS(1, 2, "FEB");
-            break;
-        case 3:
-            LcdPrintStringS(1, 2, "MAR");
-            break;
-        case 4:
-            LcdPrintStringS(1, 2, "APR");
-            break;
-        case 5:
-            LcdPrintStringS(1, 2, "MAY");
-            break;
-        case 6:
-            LcdPrintStringS(1, 2, "JUN");
-            break;
-        case 7:
-            LcdPrintStringS(1, 2, "JUL");
-            break;
-        case 8:
-            LcdPrintStringS(1, 2, "AUG");
-            break;
-        case 9:
-            LcdPrintStringS(1, 2, "SEP");
-            break;
-        case 10:
-            LcdPrintStringS(1, 2, "OCT");
-            break;
-        case 11:
-            LcdPrintStringS(1, 2, "NOV");
-            break;
-        case 12:
-            LcdPrintStringS(1, 2, "DEC");
-            break;
-    }
-
-    LcdPrintStringS(1, 5, " ");
-    if (date_mf < 10) {
-        LcdPrintStringS(1, 6, " ");
-        LcdPrintNumS(1, 7, date_mf);
-    } else
-        LcdPrintNumS(1, 6, date_mf);
-    LcdPrintStringS(1, 8, " ");
-    LcdPrintNumS(1, 9, 20);
-    if (year_mf < 10) {
-        LcdPrintNumS(1, 11, 0);
-        LcdPrintNumS(1, 12, year_mf);
-    } else LcdPrintNumS(1, 11, year_mf);
 }
 
 void SetUpTime() {
@@ -2082,9 +2121,20 @@ void SetUpTime() {
             timeBlink_1 = (timeBlink_1 + 1) % 20;
             if (timeBlink_1 > 15)
                 LcdPrintStringS(0, 12, "    ");
-            if (KEYOK && returnOK == 1) {
+            if (KEYOK) {
                 //if key ok is pressed, set the return flags;
+                statusSetUpTime = CONFIRM;
+                confirm_flag = 1;
+            }
+            if (KEYUP || KEYDOWN) {
+                //if key up is press, back to set up time
                 LcdClearS();
+                statusSetUpTime = SET_HOUR;
+                bitEnable_1 = ENABLE;
+            }
+            break;
+        case CONFIRM:
+            if(KEYUP > DEBOUNCE_THRS){
                 statusSetUpTime = INIT_SYSTEM;
                 bitEnable_1 = ENABLE;
                 setTimeFlag = 1;
@@ -2096,90 +2146,64 @@ void SetUpTime() {
                 Write_DS1307(ADDRESS_DATE, date_mf);
                 Write_DS1307(ADDRESS_MONTH, month_mf);
                 Write_DS1307(ADDRESS_YEAR, year_mf);
+                confirm_flag = 0;
             }
-            if (KEYOK && returnOK == 2) {
-                LcdClearS();
+            if(KEYDOWN > DEBOUNCE_THRS){
                 statusSetUpTime = INIT_SYSTEM;
                 bitEnable_1 = ENABLE;
                 setTimeFlag = 1;
                 returnOK = 0;
+                confirm_flag = 0;
             }
-            if (KEYDOWN) {
-                if (returnOK == 1) {
-                    returnOK = 2;
-                } else if (returnOK == 2) {
-                    returnOK = 1;
-                }
-            }
-            if (KEYUP) {
-                //if key up is press, back to set up time
-                LcdClearS();
-                statusSetUpTime = INIT_SYSTEM;
-                bitEnable_1 = ENABLE;
-            }
+            break;
         default:
             break;
 
     }
 }
 
-void Solar2Lunar(unsigned char SolarDay, unsigned char SolarMonth, unsigned int SolarYear,
-        unsigned char *LunarDay, unsigned char *LunarMonth, unsigned int *LunarYear) {
-    unsigned char N_AL_DT_DL;
-    unsigned char T_AL_DT_DL;
-    unsigned char SN_CT_AL;
-    unsigned char TN_B_THT;
-    unsigned char N_AL_DT_DL_TT;
-    unsigned char T_AL_DT_DL_TT;
-
-    union LUNAR_RECORD lr;
-
-    lr.Word = LUNAR_CALENDAR_LOOKUP_TABLE[(SolarYear - BEGINNING_YEAR) * 12 + SolarMonth - 1];
-    N_AL_DT_DL = lr.Info.N_AL_DT_DL;
-    T_AL_DT_DL = lr.Info.T_AL_DT_DL;
-    SN_CT_AL = lr.Info.SN_CT_AL + 29;
-    TN_B_THT = lr.Info.TN_B_THT;
-
-    lr.Word = LUNAR_CALENDAR_LOOKUP_TABLE[(SolarYear - BEGINNING_YEAR) * 12 + SolarMonth];
-    N_AL_DT_DL_TT = lr.Info.N_AL_DT_DL;
-    T_AL_DT_DL_TT = lr.Info.T_AL_DT_DL;
-
-    // Tinh ngay & thang
-    if (N_AL_DT_DL == SN_CT_AL && N_AL_DT_DL_TT == 2) {
-        if (SolarDay == 1) {
-            (*LunarDay) = N_AL_DT_DL;
-            (*LunarMonth) = T_AL_DT_DL;
-        } else if (SolarDay == 31) {
-            (*LunarDay) = 1;
-            (*LunarMonth) = T_AL_DT_DL_TT;
+void lunar_calculate(unsigned char x, unsigned char y, unsigned char t) {
+    unsigned char timeRTC_Mday, timeRTC_Mon, timeRTC_Year, luu, tam, tam_1;
+    // unsigned char LunarDay, LunarMonth, LunarYear;
+    unsigned char da, db, day_1, mon_1, year_1;
+    unsigned char lmon;
+    unsigned long luu_amlich;
+    timeRTC_Mday = x;
+    timeRTC_Mon = y;
+    timeRTC_Year = t;
+    day_1 = timeRTC_Mday;
+    mon_1 = timeRTC_Mon;
+    year_1 = timeRTC_Year;
+    if ((year_1 - BEGIN_YEAR) > 30) // cho phep den nam 2030
+    {
+        return;
+    }
+    da = ALdauthangDL[year_1 - BEGIN_YEAR][mon_1 - 1];
+    db = DLdauthangAL[year_1 - BEGIN_YEAR][mon_1 - 1];
+    luu = db - day_1;
+    if ((luu) <= 0) {
+        tam = 0;
+        LunarDay = (day_1 - db + 1);
+        LunarMonth = thangALdauthangAL[year_1 - BEGIN_YEAR][mon_1 - 1];
+    }
+    else {
+        tam = 0xff;
+        if ((luu) > 31) {
+            LunarDay = (day_1 - db + 1); //
+            LunarMonth = thangALdauthangDL[year_1 - BEGIN_YEAR][mon_1];
         } else {
-            (*LunarDay) = SolarDay - 1;
-            if (TN_B_THT) {
-                (*LunarMonth) = T_AL_DT_DL;
-            } else {
-                (*LunarMonth) = T_AL_DT_DL == 12 ? 1 : (T_AL_DT_DL + 1);
-            }
-        }
-    } else {
-        (*LunarDay) = SolarDay + N_AL_DT_DL - 1;
-        if ((*LunarDay) <= SN_CT_AL) {
-            (*LunarMonth) = T_AL_DT_DL;
-        } else {
-            (*LunarDay) -= SN_CT_AL;
-
-            (*LunarMonth) = T_AL_DT_DL + 1 - TN_B_THT;
-            if ((*LunarMonth) == 13)
-                (*LunarMonth) = 1;
+            LunarDay = (day_1 + da - 1); //
+            LunarMonth = thangALdauthangDL[year_1 - BEGIN_YEAR][mon_1 - 1];
         }
     }
-
-    // Tinh Nam
-    if (SolarMonth >= (*LunarMonth)) {
-        (*LunarYear) = SolarYear;
-    } else {
-        (*LunarYear) = SolarYear - 1;
+    lmon = LunarMonth;
+    tam_1 = mon_1 - lmon;
+    if ((tam_1) > 100 && tam_1 < 255)
+        LunarYear = (year_1 - 1);
+    else {
+        LunarYear = year_1;
     }
-    *LunarYear -= 2000;
+    // printf("%lu %lu %lu", LunarDay, LunarMonth, LunarYear);
 }
 
 void printCan(int can) {

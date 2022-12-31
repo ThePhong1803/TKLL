@@ -80,15 +80,8 @@ void main(void) {
         flag_timer3 = 0;
         LcdClearS();
         scan_key_matrix_with_uart_i2c();
-        //            k = (k+1)%2000;
-        //            SetUpTime();
-        //            SetUpAlarm();
         menuControl();
         DisplayLcdScreen();
-        //                if(setTimeFlag){
-        //                    SetUpTime();
-        //                    setTimeFlag = 0;
-        //                }
     }
 }
 // Hien thuc cac module co ban cua chuong trinh
@@ -523,7 +516,7 @@ void Alarm() {
                 LcdClearS();
             }
             timeAlarm++;
-            if (timeAlarm > 400 || KEYUP) {
+            if (timeAlarm > 400 || KEYUP || KEYDOWN) {
                 bitEnable = ENABLE;
                 flagAlarm = 0;
                 Write_DS1307(ADDRESS_FLAG_ALARM, flagAlarm);

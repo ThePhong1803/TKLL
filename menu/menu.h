@@ -37,20 +37,8 @@
 #define KEYOK_HOLD      isKeyHold(6)
 #define KEYUP_HOLD      isKeyHold(4)
 #define KEYDOWN_HOLD    isKeyHold(5)
-
-struct MONTH_INFO{
-	unsigned int N_AL_DT_DL		:5;
-	unsigned int T_AL_DT_DL		:4;
-	unsigned int SN_CT_AL		:1;
-	unsigned int TN_B_THT		:1;
-	unsigned int SN_CT_DL		:2;
-};
-
-union LUNAR_RECORD
-{
- 	unsigned int Word;
-	struct MONTH_INFO Info;
-};
+#define KEYUP_HOLD_NONRESET  isKeyHold_nonreset(4)
+#define KEYDOWN_HOLD_NONRESET isKeyHold_nonreset(5)
 
 
 void recvUartData();

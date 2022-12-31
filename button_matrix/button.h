@@ -24,6 +24,7 @@ void button_delay_ms(int value);
 void scan_key_matrix_demo();
 
 unsigned char isKeyPressed(unsigned char keycode);
+unsigned char isKeyHold_nonreset(unsigned char keycode);
 unsigned char isKeyHold(unsigned char keycode);
 
 #endif
