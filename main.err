@@ -1,61 +1,61 @@
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\main.c 71 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\main.c 72 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 75 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\main.c 81 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\main.c 82 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\main.c 83 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\main.c 84 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\main.c 98 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\main.c 108 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\main.c 110 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 182 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 185 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 188 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 191 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 194 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 197 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 200 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 204 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 209 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 211 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 216 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 218 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 225 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 228 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 235 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 238 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 243 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 246 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 249 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 252 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 255 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 258 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 261 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 264 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 267 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 270 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 273 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 276 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 280 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 282 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 286 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 297 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 298 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 300 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 304 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 306 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 310 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 313 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 316 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 319 : suspicious pointer conversion
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 336 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\main.c 360 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 370 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\main.c 394 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 404 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\main.c 419 : call of function without prototype
-Warning[2054] D:\Subjects\DA TKLL document\TKLL\main.c 429 : suspicious pointer conversion
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\main.c 432 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\main.c 438 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\main.c 516 : call of function without prototype
-Warning[2058] D:\Subjects\DA TKLL document\TKLL\main.c 524 : call of function without prototype
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 71 : call of function without prototype
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 72 : call of function without prototype
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 75 : suspicious pointer conversion
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 81 : call of function without prototype
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 82 : call of function without prototype
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 83 : call of function without prototype
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 84 : call of function without prototype
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 98 : call of function without prototype
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 108 : call of function without prototype
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 110 : call of function without prototype
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 182 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 185 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 188 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 191 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 194 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 197 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 200 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 204 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 209 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 211 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 216 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 218 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 225 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 228 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 235 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 238 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 243 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 246 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 249 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 252 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 255 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 258 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 261 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 264 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 267 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 270 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 273 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 276 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 280 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 282 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 286 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 297 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 298 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 300 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 304 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 306 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 310 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 313 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 316 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 319 : suspicious pointer conversion
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 336 : suspicious pointer conversion
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 360 : call of function without prototype
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 370 : suspicious pointer conversion
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 394 : call of function without prototype
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 404 : suspicious pointer conversion
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 419 : call of function without prototype
+Warning[2054] C:\Users\PC\Desktop\Digital Clock\main.c 429 : suspicious pointer conversion
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 432 : call of function without prototype
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 438 : call of function without prototype
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 516 : call of function without prototype
+Warning[2058] C:\Users\PC\Desktop\Digital Clock\main.c 524 : call of function without prototype
